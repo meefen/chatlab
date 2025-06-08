@@ -248,17 +248,9 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Button
-                    onClick={handleNextTurn}
-                    disabled={isGenerating || currentConversation.participants.length === 0}
-                    className="bg-accent hover:bg-green-600"
-                  >
-                    <Play className="w-4 h-4 mr-2" />
-                    Auto Mode
-                  </Button>
                   <Button variant="outline">
                     <Save className="w-4 h-4 mr-2" />
-                    Save
+                    Export
                   </Button>
                   <Button variant="ghost" size="icon">
                     <Settings className="w-4 h-4" />
@@ -278,7 +270,7 @@ export default function Home() {
               <div className="flex items-end space-x-3">
                 <div className="flex-1">
                   <Textarea
-                    placeholder="Add a prompt to guide the conversation, or let the characters continue autonomously..."
+                    placeholder="Add a prompt to guide the conversation, or click 'Next Turn' to let characters continue autonomously..."
                     value={userPrompt}
                     onChange={(e) => setUserPrompt(e.target.value)}
                     className="resize-none"
@@ -291,21 +283,31 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <div className="flex flex-col space-y-2">
+                <div className="flex space-x-2">
                   <Button
                     onClick={handleSendPrompt}
                     disabled={!userPrompt.trim() || isGenerating}
                     className="bg-primary hover:bg-blue-600"
+                    title="Send your prompt to guide the conversation"
                   >
-                    <Plus className="w-4 h-4" />
+                    Send Prompt
                   </Button>
                   <Button
                     onClick={handleNextTurn}
                     disabled={isGenerating || currentConversation.participants.length === 0}
-                    variant="outline"
+                    className="bg-accent hover:bg-green-600"
+                    title="Let the next character respond autonomously"
                   >
-                    <Forward className="w-4 h-4" />
+                    Next Turn
                   </Button>
+                </div>
+              </div>
+              
+              {/* Button Explanation */}
+              <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                <div className="text-xs text-gray-600 space-y-1">
+                  <div><strong>Send Prompt:</strong> Add your input to guide the conversation direction</div>
+                  <div><strong>Next Turn:</strong> Let the next character respond autonomously without your input</div>
                 </div>
               </div>
               
