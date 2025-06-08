@@ -10,6 +10,8 @@ import {
   type InsertMessage,
   type ConversationWithMessages
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   // Characters
@@ -31,65 +33,44 @@ export interface IStorage {
   createMessage(message: InsertMessage): Promise<Message>;
 }
 
-export class MemStorage implements IStorage {
-  private characters: Map<number, Character>;
-  private conversations: Map<number, Conversation>;
-  private messages: Map<number, Message>;
-  private currentCharacterId: number;
-  private currentConversationId: number;
-  private currentMessageId: number;
-
-  constructor() {
-    this.characters = new Map();
-    this.conversations = new Map();
-    this.messages = new Map();
-    this.currentCharacterId = 1;
-    this.currentConversationId = 1;
-    this.currentMessageId = 1;
-  }
-
-  // Characters
+export class DatabaseStorage implements IStorage {
   async getCharacter(id: number): Promise<Character | undefined> {
-    return this.characters.get(id);
+    const [character] = await db.select().from(characters).where(eq(characters.id, id));
+    return character || undefined;
   }
 
   async getCharacters(): Promise<Character[]> {
-    return Array.from(this.characters.values()).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    return await db.select().from(characters).orderBy(characters.createdAt);
   }
 
   async getActiveCharacters(): Promise<Character[]> {
-    return Array.from(this.characters.values())
-      .filter(c => c.isActive)
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    return await db.select().from(characters).where(eq(characters.isActive, true)).orderBy(characters.createdAt);
   }
 
   async createCharacter(insertCharacter: InsertCharacter): Promise<Character> {
-    const id = this.currentCharacterId++;
-    const character: Character = {
-      ...insertCharacter,
-      id,
-      createdAt: new Date(),
-    };
-    this.characters.set(id, character);
+    const [character] = await db
+      .insert(characters)
+      .values(insertCharacter)
+      .returning();
     return character;
   }
 
   async updateCharacter(id: number, updates: Partial<InsertCharacter>): Promise<Character | undefined> {
-    const character = this.characters.get(id);
-    if (!character) return undefined;
-
-    const updated: Character = { ...character, ...updates };
-    this.characters.set(id, updated);
-    return updated;
+    const [character] = await db
+      .update(characters)
+      .set(updates)
+      .where(eq(characters.id, id))
+      .returning();
+    return character || undefined;
   }
 
   async deleteCharacter(id: number): Promise<boolean> {
-    return this.characters.delete(id);
+    const result = await db.delete(characters).where(eq(characters.id, id));
+    return (result.rowCount ?? 0) > 0;
   }
 
-  // Conversations
   async getConversation(id: number): Promise<ConversationWithMessages | undefined> {
-    const conversation = this.conversations.get(id);
+    const [conversation] = await db.select().from(conversations).where(eq(conversations.id, id));
     if (!conversation) return undefined;
 
     const conversationMessages = await this.getMessages(id);
@@ -105,40 +86,32 @@ export class MemStorage implements IStorage {
   }
 
   async getConversations(): Promise<Conversation[]> {
-    return Array.from(this.conversations.values()).sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+    return await db.select().from(conversations).orderBy(conversations.updatedAt);
   }
 
   async createConversation(insertConversation: InsertConversation): Promise<Conversation> {
-    const id = this.currentConversationId++;
-    const now = new Date();
-    const conversation: Conversation = {
-      ...insertConversation,
-      id,
-      createdAt: now,
-      updatedAt: now,
-    };
-    this.conversations.set(id, conversation);
+    const [conversation] = await db
+      .insert(conversations)
+      .values(insertConversation)
+      .returning();
     return conversation;
   }
 
   async updateConversation(id: number, updates: Partial<InsertConversation>): Promise<Conversation | undefined> {
-    const conversation = this.conversations.get(id);
-    if (!conversation) return undefined;
-
-    const updated: Conversation = { 
-      ...conversation, 
-      ...updates,
-      updatedAt: new Date(),
-    };
-    this.conversations.set(id, updated);
-    return updated;
+    const [conversation] = await db
+      .update(conversations)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(conversations.id, id))
+      .returning();
+    return conversation || undefined;
   }
 
-  // Messages
   async getMessages(conversationId: number): Promise<(Message & { character?: Character })[]> {
-    const conversationMessages = Array.from(this.messages.values())
-      .filter(m => m.conversationId === conversationId)
-      .sort((a, b) => a.turnNumber - b.turnNumber);
+    const conversationMessages = await db
+      .select()
+      .from(messages)
+      .where(eq(messages.conversationId, conversationId))
+      .orderBy(messages.turnNumber);
 
     return Promise.all(
       conversationMessages.map(async (message) => ({
@@ -149,25 +122,19 @@ export class MemStorage implements IStorage {
   }
 
   async createMessage(insertMessage: InsertMessage): Promise<Message> {
-    const id = this.currentMessageId++;
-    const message: Message = {
-      ...insertMessage,
-      id,
-      createdAt: new Date(),
-    };
-    this.messages.set(id, message);
+    const [message] = await db
+      .insert(messages)
+      .values(insertMessage)
+      .returning();
 
     // Update conversation's updatedAt timestamp
-    const conversation = this.conversations.get(insertMessage.conversationId);
-    if (conversation) {
-      this.conversations.set(insertMessage.conversationId, {
-        ...conversation,
-        updatedAt: new Date(),
-      });
-    }
+    await db
+      .update(conversations)
+      .set({ updatedAt: new Date() })
+      .where(eq(conversations.id, insertMessage.conversationId));
 
     return message;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
