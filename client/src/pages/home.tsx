@@ -15,6 +15,7 @@ export default function Home() {
   const [currentConversation, setCurrentConversation] = useState<ConversationWithMessages | null>(null);
   const [userPrompt, setUserPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedCharacterIds, setSelectedCharacterIds] = useState<Set<number>>(new Set());
 
   const { data: characters = [], isLoading: charactersLoading } = useCharacters();
   const { 
@@ -26,6 +27,7 @@ export default function Home() {
   } = useConversations();
 
   const activeCharacters = characters.filter(c => c.isActive);
+  const selectedCharacters = characters.filter(c => selectedCharacterIds.has(c.id));
 
   const handleCreateCharacter = () => {
     setEditingCharacter(null);
@@ -37,15 +39,27 @@ export default function Home() {
     setIsCharacterModalOpen(true);
   };
 
+  const handleToggleCharacterSelection = (characterId: number) => {
+    setSelectedCharacterIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(characterId)) {
+        newSet.delete(characterId);
+      } else {
+        newSet.add(characterId);
+      }
+      return newSet;
+    });
+  };
+
   const handleStartConversation = async () => {
-    if (activeCharacters.length < 2) {
+    if (selectedCharacters.length < 2) {
       return;
     }
 
     try {
       const conversation = await createConversation.mutateAsync({
         title: "New Conversation",
-        participantIds: activeCharacters.map(c => c.id),
+        participantIds: selectedCharacters.map(c => c.id),
         isAutonomous: false,
         currentTurn: 0,
       });
@@ -147,6 +161,16 @@ export default function Home() {
             </Button>
           </div>
 
+          {/* Participant Selection */}
+          <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <h3 className="text-sm font-medium text-blue-900 mb-2">Select Conversation Participants</h3>
+            <p className="text-xs text-blue-700 mb-2">Choose 2 or more characters to include in your conversation</p>
+            <div className="text-xs text-blue-600">
+              {selectedCharacters.length} selected
+              {selectedCharacters.length >= 2 && " • Ready to start conversation"}
+            </div>
+          </div>
+
           {charactersLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map(i => (
@@ -170,24 +194,27 @@ export default function Home() {
                   key={character.id}
                   character={character}
                   onEdit={() => handleEditCharacter(character)}
+                  showSelection={true}
+                  isSelected={selectedCharacterIds.has(character.id)}
+                  onToggleSelection={() => handleToggleCharacterSelection(character.id)}
                 />
               ))}
             </div>
           )}
 
           {/* Start Conversation Button */}
-          {activeCharacters.length >= 2 && (
-            <div className="mt-6">
-              <Button
-                onClick={handleStartConversation}
-                className="w-full bg-accent hover:bg-green-600"
-                disabled={createConversation.isPending}
-              >
-                <Play className="w-4 h-4 mr-2" />
-                Start New Conversation
-              </Button>
-            </div>
-          )}
+          <div className="mt-6">
+            <Button
+              onClick={handleStartConversation}
+              className="w-full bg-accent hover:bg-green-600"
+              disabled={selectedCharacters.length < 2 || createConversation.isPending}
+            >
+              <Play className="w-4 h-4 mr-2" />
+              {selectedCharacters.length < 2 
+                ? `Select ${2 - selectedCharacters.length} more character${2 - selectedCharacters.length === 1 ? '' : 's'}` 
+                : `Start New Conversation (${selectedCharacters.length} participants)`}
+            </Button>
+          </div>
 
           {/* Conversation History */}
           <div className="mt-8">

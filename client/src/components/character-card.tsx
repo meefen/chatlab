@@ -1,16 +1,35 @@
 import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import type { Character } from "@shared/schema";
 
 interface CharacterCardProps {
   character: Character;
   onEdit: () => void;
+  isSelected?: boolean;
+  onToggleSelection?: () => void;
+  showSelection?: boolean;
 }
 
-export function CharacterCard({ character, onEdit }: CharacterCardProps) {
+export function CharacterCard({ 
+  character, 
+  onEdit, 
+  isSelected = false, 
+  onToggleSelection, 
+  showSelection = false 
+}: CharacterCardProps) {
   return (
-    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:border-primary transition-colors">
+    <div className={`bg-gray-50 rounded-lg p-4 border transition-colors ${
+      isSelected ? 'border-primary bg-blue-50' : 'border-gray-200 hover:border-primary'
+    }`}>
       <div className="flex items-start space-x-3">
+        {showSelection && (
+          <Checkbox
+            checked={isSelected}
+            onCheckedChange={onToggleSelection}
+            className="mt-2"
+          />
+        )}
         <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-lg font-medium text-gray-700 flex-shrink-0">
           {character.name.charAt(0)}
         </div>
