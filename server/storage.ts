@@ -143,20 +143,34 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createConversation(insertConversation: InsertConversation): Promise<Conversation> {
+    const conversationData = {
+      ...insertConversation,
+      participantIds: Array.isArray(insertConversation.participantIds) 
+        ? insertConversation.participantIds 
+        : Array.from(insertConversation.participantIds)
+    };
+    
     const [conversation] = await db
       .insert(conversations)
-      .values({
-        ...insertConversation,
-        participantIds: Array.from(insertConversation.participantIds)
-      })
+      .values(conversationData)
       .returning();
     return conversation;
   }
 
   async updateConversation(id: number, updates: Partial<InsertConversation>): Promise<Conversation | undefined> {
+    const updateData = {
+      ...updates,
+      updatedAt: new Date(),
+      ...(updates.participantIds && {
+        participantIds: Array.isArray(updates.participantIds) 
+          ? updates.participantIds 
+          : Array.from(updates.participantIds)
+      })
+    };
+    
     const [conversation] = await db
       .update(conversations)
-      .set({ ...updates, updatedAt: new Date() })
+      .set(updateData)
       .where(eq(conversations.id, id))
       .returning();
     return conversation || undefined;
