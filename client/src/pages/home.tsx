@@ -129,7 +129,7 @@ export default function Home() {
       <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
         {/* Header */}
         <div className="p-6 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-gray-900">DialogueCraft</h1>
+          <h1 className="text-xl font-bold text-gray-900">ChatLab</h1>
           <p className="text-sm text-gray-600 mt-1">AI Character Conversations</p>
         </div>
 
