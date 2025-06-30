@@ -63,22 +63,14 @@ export default function Home() {
         participant_ids: selectedCharacters.map(c => c.id),
       });
 
-      // Create a mock conversation with the topic as first message
-      const mockConversation: ConversationWithMessages = {
+      // Create conversation object without any initial messages
+      const newConversation: ConversationWithMessages = {
         ...conversation,
-        messages: [{
-          id: 1,
-          conversation_id: conversation.id,
-          content: topic,
-          is_user_prompt: true,
-          turn_number: 1,
-          created_at: new Date().toISOString(),
-          character_id: null,
-        }],
+        messages: [], // Start with empty messages array
         participants: selectedCharacters,
       };
 
-      setCurrentConversation(mockConversation);
+      setCurrentConversation(newConversation);
       setViewState('discussion');
     } catch (error) {
       console.error("Failed to launch discussion:", error);
@@ -98,21 +90,30 @@ export default function Home() {
       // Add user message to the conversation
       const nextTurn = Math.max(...currentConversation.messages.map(m => m.turn_number), 0) + 1;
       
-      // Save to database first
-      await addUserMessage.mutateAsync({
+      console.log("Sending user message:", {
         conversationId: currentConversation.id,
         content: message,
         turnNumber: nextTurn,
       });
+      
+      // Save to database first
+      const result = await addUserMessage.mutateAsync({
+        conversationId: currentConversation.id,
+        content: message,
+        turnNumber: nextTurn,
+      });
+      
+      console.log("User message saved:", result);
 
       // Refresh the conversation to get the saved message
       const response = await fetch(`http://localhost:8000/api/conversations/${currentConversation.id}`);
       const updatedConversation = await response.json();
+      console.log("Updated conversation:", updatedConversation);
       setCurrentConversation(updatedConversation);
       
     } catch (error) {
       console.error("Failed to send message:", error);
-      alert("Failed to send message. Please try again.");
+      alert(`Failed to send message: ${error}`);
     }
   };
 
@@ -126,11 +127,14 @@ export default function Home() {
         .filter(m => m.is_user_prompt)
         .sort((a, b) => b.turn_number - a.turn_number);
       
+      // If no user messages yet, use the discussion topic from the conversation title
       const mostRecentPrompt = recentUserPrompts.length > 0 
         ? recentUserPrompts[0].content 
-        : "Please share your thoughts on the topic being discussed.";
+        : currentConversation.title || "Please share your thoughts on the topic being discussed.";
 
-      // Generate response using the real API with the most recent user input
+      console.log("Using prompt for AI:", mostRecentPrompt);
+
+      // Generate response using the real API with the most recent user input or topic
       const result = await generateResponse.mutateAsync({
         conversationId: currentConversation.id,
         characterId,

@@ -10,8 +10,11 @@ class MessageBase(BaseModel):
     is_user_prompt: bool = False
     turn_number: int
 
-class MessageCreate(MessageBase):
-    pass
+class MessageCreate(BaseModel):
+    character_id: Optional[int] = None
+    content: str
+    is_user_prompt: bool = False
+    turn_number: int
 
 class MessageResponse(MessageBase):
     id: int
