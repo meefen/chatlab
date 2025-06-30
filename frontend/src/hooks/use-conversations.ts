@@ -7,12 +7,12 @@ export function useConversations() {
 
   const query = useQuery<Conversation[]>({
     queryKey: ["conversations"],
-    queryFn: () => get("/api/conversations"),
+    queryFn: () => get("/api/conversations/"),
   });
 
   const createConversation = useMutation({
     mutationFn: async (data: { title: string; participant_ids: number[] }) => {
-      return post("/api/conversations", data);
+      return post("/api/conversations/", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["conversations"] });

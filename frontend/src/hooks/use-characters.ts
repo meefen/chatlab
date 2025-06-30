@@ -8,12 +8,12 @@ export function useCharacters() {
 
   const query = useQuery<Character[]>({
     queryKey: ["characters"],
-    queryFn: () => get("/api/characters"),
+    queryFn: () => get("/api/characters/"),
   });
 
   const createCharacter = useMutation({
     mutationFn: async (data: InsertCharacter) => {
-      return post("/api/characters", data);
+      return post("/api/characters/", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["characters"] });
