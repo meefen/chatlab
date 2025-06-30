@@ -7,6 +7,7 @@ import DiscussionSetup from "./discussion-setup";
 import Discussion from "./discussion";
 import { useCharacters } from "@/hooks/use-characters";
 import { useConversations } from "@/hooks/use-conversations";
+import { get } from "@/services/api";
 import type { Character, ConversationWithMessages } from "@/types/api";
 
 type ViewState = 'selection' | 'setup' | 'discussion';
@@ -106,8 +107,7 @@ export default function Home() {
       console.log("User message saved:", result);
 
       // Refresh the conversation to get the saved message
-      const response = await fetch(`http://localhost:8000/api/conversations/${currentConversation.id}`);
-      const updatedConversation = await response.json();
+      const updatedConversation = await get(`/api/conversations/${currentConversation.id}`);
       console.log("Updated conversation:", updatedConversation);
       setCurrentConversation(updatedConversation);
       
@@ -142,8 +142,7 @@ export default function Home() {
       });
 
       // Refresh the conversation to get the new message
-      const response = await fetch(`http://localhost:8000/api/conversations/${currentConversation.id}`);
-      const updatedConversation = await response.json();
+      const updatedConversation = await get(`/api/conversations/${currentConversation.id}`);
       setCurrentConversation(updatedConversation);
       
     } catch (error) {
