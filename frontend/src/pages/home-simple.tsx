@@ -1,0 +1,265 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { CharacterCard } from "@/components/character-card";
+import { CharacterModal } from "@/components/character-modal";
+import DiscussionSetup from "./discussion-setup";
+import Discussion from "./discussion";
+import { useCharacters } from "@/hooks/use-characters";
+import { useConversations } from "@/hooks/use-conversations";
+import type { Character, ConversationWithMessages } from "@/types/api";
+
+type ViewState = 'selection' | 'setup' | 'discussion';
+
+export default function Home() {
+  const [isCharacterModalOpen, setIsCharacterModalOpen] = useState(false);
+  const [editingCharacter, setEditingCharacter] = useState<Character | null>(null);
+  const [currentConversation, setCurrentConversation] = useState<ConversationWithMessages | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedCharacterIds, setSelectedCharacterIds] = useState<Set<number>>(new Set());
+  const [viewState, setViewState] = useState<ViewState>('selection');
+
+  const { data: characters = [], isLoading: charactersLoading } = useCharacters();
+  const { createConversation, generateResponse, addUserMessage } = useConversations();
+
+  const selectedCharacters = characters.filter(c => selectedCharacterIds.has(c.id));
+
+  const handleCreateCharacter = () => {
+    setEditingCharacter(null);
+    setIsCharacterModalOpen(true);
+  };
+
+  const handleEditCharacter = (character: Character) => {
+    setEditingCharacter(character);
+    setIsCharacterModalOpen(true);
+  };
+
+  const handleToggleCharacterSelection = (characterId: number) => {
+    setSelectedCharacterIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(characterId)) {
+        newSet.delete(characterId);
+      } else {
+        newSet.add(characterId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleProceedToSetup = () => {
+    if (selectedCharacters.length >= 2) {
+      setViewState('setup');
+    }
+  };
+
+  const handleBackToSelection = () => {
+    setViewState('selection');
+  };
+
+  const handleLaunchDiscussion = async (topic: string) => {
+    try {
+      const conversation = await createConversation.mutateAsync({
+        title: topic,
+        participant_ids: selectedCharacters.map(c => c.id),
+      });
+
+      // Create a mock conversation with the topic as first message
+      const mockConversation: ConversationWithMessages = {
+        ...conversation,
+        messages: [{
+          id: 1,
+          conversation_id: conversation.id,
+          content: topic,
+          is_user_prompt: true,
+          turn_number: 1,
+          created_at: new Date().toISOString(),
+          character_id: null,
+        }],
+        participants: selectedCharacters,
+      };
+
+      setCurrentConversation(mockConversation);
+      setViewState('discussion');
+    } catch (error) {
+      console.error("Failed to launch discussion:", error);
+    }
+  };
+
+  const handleNewDiscussion = () => {
+    setCurrentConversation(null);
+    setSelectedCharacterIds(new Set());
+    setViewState('selection');
+  };
+
+  const handleSendMessage = async (message: string) => {
+    if (!currentConversation) return;
+    
+    try {
+      // Add user message to the conversation
+      const nextTurn = Math.max(...currentConversation.messages.map(m => m.turn_number), 0) + 1;
+      
+      // Save to database first
+      await addUserMessage.mutateAsync({
+        conversationId: currentConversation.id,
+        content: message,
+        turnNumber: nextTurn,
+      });
+
+      // Refresh the conversation to get the saved message
+      const response = await fetch(`http://localhost:8000/api/conversations/${currentConversation.id}`);
+      const updatedConversation = await response.json();
+      setCurrentConversation(updatedConversation);
+      
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      alert("Failed to send message. Please try again.");
+    }
+  };
+
+  const handleNextResponse = async (characterId: number) => {
+    if (!currentConversation) return;
+    setIsGenerating(true);
+    
+    try {
+      // Find the most recent user prompt to use as context
+      const recentUserPrompts = currentConversation.messages
+        .filter(m => m.is_user_prompt)
+        .sort((a, b) => b.turn_number - a.turn_number);
+      
+      const mostRecentPrompt = recentUserPrompts.length > 0 
+        ? recentUserPrompts[0].content 
+        : "Please share your thoughts on the topic being discussed.";
+
+      // Generate response using the real API with the most recent user input
+      const result = await generateResponse.mutateAsync({
+        conversationId: currentConversation.id,
+        characterId,
+        userPrompt: mostRecentPrompt,
+      });
+
+      // Refresh the conversation to get the new message
+      const response = await fetch(`http://localhost:8000/api/conversations/${currentConversation.id}`);
+      const updatedConversation = await response.json();
+      setCurrentConversation(updatedConversation);
+      
+    } catch (error) {
+      console.error("Failed to generate response:", error);
+      // Show user-friendly error message
+      alert("Failed to generate response. Please try again.");
+    }
+    
+    setIsGenerating(false);
+  };
+
+  // Render based on view state
+  if (viewState === 'setup') {
+    return (
+      <DiscussionSetup
+        selectedCharacters={selectedCharacters}
+        onBack={handleBackToSelection}
+        onLaunch={handleLaunchDiscussion}
+      />
+    );
+  }
+
+  if (viewState === 'discussion' && currentConversation) {
+    return (
+      <Discussion
+        conversation={currentConversation}
+        onNewDiscussion={handleNewDiscussion}
+        onSendMessage={handleSendMessage}
+        onNextResponse={handleNextResponse}
+        isGenerating={isGenerating}
+      />
+    );
+  }
+
+  // Character selection view
+  return (
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">ChatLab</h1>
+          <p className="text-xl text-gray-600">AI Character Conversations</p>
+        </div>
+
+        {/* Character Management */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-semibold text-gray-900">Characters</h2>
+            <Button
+              onClick={handleCreateCharacter}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add
+            </Button>
+          </div>
+
+          {/* Participant Selection */}
+          <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h3 className="font-medium text-blue-900 mb-2">Select Conversation Participants</h3>
+            <p className="text-sm text-blue-700 mb-2">Choose 2 or more characters to include in your conversation</p>
+            <div className="text-sm text-blue-600">
+              {selectedCharacters.length} selected
+              {selectedCharacters.length >= 2 && " • Ready to start conversation"}
+            </div>
+          </div>
+
+          {charactersLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="bg-gray-50 rounded-lg p-4 animate-pulse">
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                </div>
+              ))}
+            </div>
+          ) : characters.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500 mb-4">No characters created yet</p>
+              <Button onClick={handleCreateCharacter} variant="outline">
+                Create your first character
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              {characters.map(character => (
+                <CharacterCard
+                  key={character.id}
+                  character={character}
+                  onEdit={() => handleEditCharacter(character)}
+                  showSelection={true}
+                  isSelected={selectedCharacterIds.has(character.id)}
+                  onToggleSelection={() => handleToggleCharacterSelection(character.id)}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Continue Button */}
+          <div className="text-center">
+            <Button
+              onClick={handleProceedToSetup}
+              disabled={selectedCharacters.length < 2}
+              size="lg"
+              className="px-8 py-4 text-lg bg-green-600 hover:bg-green-700"
+            >
+              {selectedCharacters.length < 2 
+                ? `Select ${2 - selectedCharacters.length} more character${2 - selectedCharacters.length === 1 ? '' : 's'}` 
+                : `Continue with ${selectedCharacters.length} participants`}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Character Modal */}
+      <CharacterModal
+        open={isCharacterModalOpen}
+        onOpenChange={setIsCharacterModalOpen}
+        character={editingCharacter}
+      />
+    </div>
+  );
+}
