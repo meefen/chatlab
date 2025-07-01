@@ -24,9 +24,8 @@ ENV PYTHONPATH="/app"
 # Expose port
 EXPOSE 8000
 
-# Copy and make startup script executable
-COPY start.sh .
-RUN chmod +x start.sh
+# Copy startup script
+COPY startup.py .
 
 # Start the application with migrations
-CMD ["./start.sh"]
+CMD ["python", "startup.py"]
