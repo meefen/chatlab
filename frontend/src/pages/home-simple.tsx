@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { CharacterCard } from "@/components/character-card";
 import { CharacterModal } from "@/components/character-modal";
+import { UserMenu } from "@/components/auth/UserMenu";
 import DiscussionSetup from "./discussion-setup";
 import Discussion from "./discussion";
 import { useCharacters } from "@/hooks/use-characters";
@@ -182,9 +183,14 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">ChatLab</h1>
-          <p className="text-xl text-gray-600">Invite educators to chat</p>
+        <div className="flex justify-between items-start mb-12">
+          <div className="text-center flex-1">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">ChatLab</h1>
+            <p className="text-xl text-gray-600">Invite educators to chat</p>
+          </div>
+          <div className="ml-4">
+            <UserMenu />
+          </div>
         </div>
 
         {/* Character Management */}

@@ -1,3 +1,5 @@
+import { supabase } from '../lib/supabase';
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 export async function apiRequest(
@@ -7,9 +9,24 @@ export async function apiRequest(
 ): Promise<Response> {
   const url = `${API_BASE_URL}${endpoint}`;
   
+  // Get the current session token
+  const { data: { session } } = await supabase.auth.getSession();
+  const accessToken = session?.access_token;
+  
+  
+  const headers: Record<string, string> = {};
+  
+  if (data) {
+    headers["Content-Type"] = "application/json";
+  }
+  
+  if (accessToken) {
+    headers["Authorization"] = `Bearer ${accessToken}`;
+  }
+  
   const res = await fetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers,
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });

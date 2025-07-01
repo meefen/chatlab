@@ -96,7 +96,7 @@ export function CharacterModal({ open, onOpenChange, character }: CharacterModal
       <DialogContent className="w-full max-w-lg mx-4">
         <DialogHeader>
           <DialogTitle>
-            {character ? "Edit Character" : "Create New Character"}
+            {character ? "Edit Educator" : "Add New Educator"}
           </DialogTitle>
         </DialogHeader>
         
@@ -107,7 +107,7 @@ export function CharacterModal({ open, onOpenChange, character }: CharacterModal
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Character Name</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input placeholder="e.g., Albert Einstein" {...field} />
                   </FormControl>

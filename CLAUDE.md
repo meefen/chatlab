@@ -67,6 +67,7 @@ The chat history should be saved on the server for the user to review later, sim
 - **Features**:
   - Email/password registration
   - Google OAuth integration
+  - Microsoft 365 integration
   - Other social login providers as needed
   - User session management
   - JWT token handling

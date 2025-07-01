@@ -8,17 +8,30 @@ from ..models.message import Message
 from ..models.character import Character
 from ..schemas.conversation import ConversationCreate, ConversationUpdate, ConversationResponse, ConversationWithMessages
 from ..schemas.message import MessageCreate, MessageResponse
+from ..models.user import User
+from ..auth import get_current_user
 
 router = APIRouter()
 
 @router.get("/", response_model=List[ConversationResponse])
-async def get_conversations(db: Session = Depends(get_db)):
-    conversations = db.query(Conversation).all()
+async def get_conversations(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # Only return conversations for the current user
+    conversations = db.query(Conversation).filter(Conversation.user_id == current_user.id).all()
     return conversations
 
 @router.get("/{conversation_id}", response_model=ConversationWithMessages)
-async def get_conversation(conversation_id: int, db: Session = Depends(get_db)):
-    conversation = db.query(Conversation).filter(Conversation.id == conversation_id).first()
+async def get_conversation(
+    conversation_id: int, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    conversation = db.query(Conversation).filter(
+        Conversation.id == conversation_id,
+        Conversation.user_id == current_user.id
+    ).first()
     if not conversation:
         raise HTTPException(status_code=404, detail="Conversation not found")
     
@@ -35,8 +48,17 @@ async def get_conversation(conversation_id: int, db: Session = Depends(get_db)):
     )
 
 @router.post("/", response_model=ConversationResponse)
-async def create_conversation(conversation: ConversationCreate, db: Session = Depends(get_db)):
-    db_conversation = Conversation(**conversation.dict())
+async def create_conversation(
+    conversation: ConversationCreate, 
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # Create conversation linked to current user
+    conversation_data = conversation.model_dump()
+    db_conversation = Conversation(
+        **conversation_data,
+        user_id=current_user.id
+    )
     db.add(db_conversation)
     db.commit()
     db.refresh(db_conversation)

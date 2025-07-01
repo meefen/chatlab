@@ -6,7 +6,7 @@ import logging
 
 from .config import settings
 from .database import create_tables
-from .api import auth, characters, conversations, ai
+from .api import auth, users, characters, conversations, ai
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -44,6 +44,7 @@ async def startup_event():
     logger.info("Database tables created")
 
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(users.router, tags=["users"])
 app.include_router(characters.router, prefix="/api/characters", tags=["characters"])
 app.include_router(conversations.router, prefix="/api/conversations", tags=["conversations"])
 app.include_router(ai.router, prefix="/api/ai", tags=["ai"])

@@ -8,10 +8,10 @@ from ..config import settings
 openai_client = None
 anthropic_client = None
 
-if settings.OPENAI_API_KEY and settings.OPENAI_API_KEY != "sk-fake-key-for-development":
+if settings.OPENAI_API_KEY and settings.OPENAI_API_KEY not in ["sk-fake-key-for-development", "your_openai_key"]:
     openai_client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
-if settings.ANTHROPIC_API_KEY and settings.ANTHROPIC_API_KEY != "sk-ant-fake-key-for-development":
+if settings.ANTHROPIC_API_KEY and settings.ANTHROPIC_API_KEY not in ["sk-ant-fake-key-for-development", "your_anthropic_key"]:
     print(f"Initializing Anthropic client with key starting with: {settings.ANTHROPIC_API_KEY[:10]}...")
     anthropic_client = Anthropic(api_key=settings.ANTHROPIC_API_KEY)
 else:
