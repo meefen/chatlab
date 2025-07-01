@@ -24,5 +24,9 @@ ENV PYTHONPATH="/app"
 # Expose port
 EXPOSE 8000
 
-# Start the application (database tables will be created via FastAPI startup event)
-CMD uvicorn app.main:app --host 0.0.0.0 --port 8000
+# Copy and make startup script executable
+COPY start.sh .
+RUN chmod +x start.sh
+
+# Start the application with migrations
+CMD ["./start.sh"]
