@@ -72,13 +72,6 @@ export default function Home() {
         participant_ids: selectedCharacters.map(c => c.id),
       });
 
-      // Add the initial topic as the first user message
-      await addUserMessage.mutateAsync({
-        conversationId: conversation.id,
-        content: discussionTopic.trim(),
-        turnNumber: 1,
-      });
-
       // Fetch the full conversation with messages
       const fullConversation = await get(`/api/conversations/${conversation.id}`);
       setCurrentConversation(fullConversation);
@@ -131,9 +124,20 @@ export default function Home() {
 
       if (!nextCharacter) return;
 
+      // Determine what prompt to use for AI
+      const recentUserPrompts = currentConversation.messages
+        ?.filter(m => m.is_user_prompt)
+        .sort((a, b) => b.turn_number - a.turn_number);
+      
+      // If no user messages yet, use the discussion topic from the conversation title
+      const userPrompt = recentUserPrompts && recentUserPrompts.length > 0 
+        ? recentUserPrompts[0].content 
+        : currentConversation.title || "Please share your thoughts on the topic being discussed.";
+
       await generateResponse.mutateAsync({
         conversationId: currentConversation.id,
         characterId: nextCharacter.id,
+        userPrompt: userPrompt,
       });
 
       // Refresh conversation
@@ -236,7 +240,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto flex justify-between items-center">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">ChatLab</h1>
-              <p className="text-sm text-gray-600">Create conversations with educational theorists</p>
+              <p className="text-sm text-gray-600">Invite educational theorists to chat</p>
             </div>
             <div className="flex items-center gap-3">
               <Button
@@ -256,22 +260,22 @@ export default function Home() {
           {/* Character Management */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">Select Educational Theorists</h2>
-              <p className="text-sm text-gray-600 mt-1">Choose 1 or more theorists to participate in your conversation</p>
+              <h2 className="text-xl font-semibold text-gray-900">Select Characters</h2>
+              <p className="text-sm text-gray-600 mt-1">Choose 1 or more characters to chat</p>
             </div>
             <Button onClick={handleCreateCharacter} className="bg-primary hover:bg-blue-600">
               <Plus className="w-4 h-4 mr-2" />
-              Add Theorist
+              Add Character
             </Button>
           </div>
 
           {/* Selection Status */}
           <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <h3 className="font-medium text-blue-900 mb-2">Selection Status</h3>
-            <p className="text-sm text-blue-700 mb-2">Click on characters below to select them for your conversation</p>
+            <p className="text-sm text-blue-700 mb-2">Click on characters below to select them for your chat</p>
             <div className="text-sm text-blue-600">
               {selectedCharacters.length === 0 
-                ? "No characters selected yet"
+                ? "No one selected yet"
                 : `${selectedCharacters.length} character${selectedCharacters.length === 1 ? '' : 's'} selected • Ready to continue`
               }
             </div>
@@ -308,7 +312,7 @@ export default function Home() {
           {/* Selected Characters Summary */}
           {selectedCharacters.length > 0 && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <h3 className="font-medium text-blue-900 mb-2">Selected Theorists ({selectedCharacters.length})</h3>
+              <h3 className="font-medium text-blue-900 mb-2">Selected Characters ({selectedCharacters.length})</h3>
               <div className="flex flex-wrap gap-2">
                 {selectedCharacters.map(character => (
                   <span key={character.id} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
@@ -369,7 +373,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto p-6">
           {/* Selected Characters Display */}
           <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Selected Theorists</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Selected Characters</h2>
             <div className="flex flex-wrap gap-4">
               {selectedCharacters.map((character, index) => (
                 <div key={character.id} className="flex items-center space-x-3 bg-gray-50 rounded-lg p-3">
@@ -474,7 +478,7 @@ export default function Home() {
           <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mx-6 mt-6 rounded-r-lg">
             <h3 className="font-semibold text-blue-900 mb-2">Discussion Topic:</h3>
             <p className="text-blue-800">
-              {currentConversation.messages?.find(m => m.is_user_prompt)?.content || currentConversation.title}
+              {currentConversation.title}
             </p>
           </div>
 
