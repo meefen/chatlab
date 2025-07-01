@@ -82,7 +82,7 @@ export default function Discussion({
             >
               <div className="flex items-center gap-2 mb-2">
                 <div className="text-2xl">
-                  {message.is_user_prompt ? "💬" : "🎓"}
+                  {message.is_user_prompt ? "🎓" : "💬"}
                 </div>
                 <span className="font-semibold text-gray-900">
                   {message.character?.name || "You"}
