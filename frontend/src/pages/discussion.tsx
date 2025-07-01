@@ -41,7 +41,7 @@ export default function Discussion({
       {/* Header */}
       <div className="bg-white border-b border-gray-200 p-6">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Discussion in Progress</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Chat in Progress</h1>
           <div className="flex gap-3">
             <Button variant="outline" size="sm">
               <Download className="w-4 h-4 mr-2" />
@@ -62,7 +62,7 @@ export default function Discussion({
       <div className="max-w-6xl mx-auto p-6">
         {/* Discussion Topic */}
         <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
-          <h3 className="font-semibold text-blue-900 mb-2">Discussion Topic:</h3>
+          <h3 className="font-semibold text-blue-900 mb-2">Chat Topic:</h3>
           <p className="text-blue-800">
             {conversation.messages.find(m => m.is_user_prompt)?.content || conversation.title}
           </p>
@@ -148,7 +148,7 @@ export default function Discussion({
 
           {/* Discussion Panel */}
           <div className="text-center">
-            <p className="text-sm text-gray-600 mb-3">Current Discussion Panel:</p>
+            <p className="text-sm text-gray-600 mb-3">Current Chat Panel:</p>
             <div className="flex gap-3 justify-center">
               {conversation.participants.map((participant, index) => (
                 <div
@@ -159,7 +159,7 @@ export default function Discussion({
                       : 'bg-gray-100 text-gray-600'
                   }`}
                 >
-                  <span className="mr-2">{index === 0 ? '🎓' : '🌱'}</span>
+                  <span className="mr-2">{index === 0 ? '🎓' : index === 1 ? '🌱' : index === 2 ? '📚' : '🔬'}</span>
                   {participant.name}
                 </div>
               ))}

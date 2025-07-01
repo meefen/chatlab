@@ -144,13 +144,13 @@ export default function Home() {
         {/* Header */}
         <div className="p-6 border-b border-gray-200">
           <h1 className="text-xl font-bold text-gray-900">ChatLab</h1>
-          <p className="text-sm text-gray-600 mt-1">AI Character Conversations</p>
+          <p className="text-sm text-gray-600 mt-1">Invite educators to chat</p>
         </div>
 
         {/* Character Management */}
         <div className="flex-1 p-4 overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Characters</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Educators</h2>
             <Button
               onClick={handleCreateCharacter}
               size="sm"
@@ -163,8 +163,8 @@ export default function Home() {
 
           {/* Participant Selection */}
           <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-            <h3 className="text-sm font-medium text-blue-900 mb-2">Select Conversation Participants</h3>
-            <p className="text-xs text-blue-700 mb-2">Choose 2 or more characters to include in your conversation</p>
+            <h3 className="text-sm font-medium text-blue-900 mb-2">Select Participants</h3>
+            <p className="text-xs text-blue-700 mb-2">Choose 2 or more educators to include in your chat</p>
             <div className="text-xs text-blue-600">
               {selectedCharacters.length} selected
               {selectedCharacters.length >= 2 && " • Ready to start conversation"}

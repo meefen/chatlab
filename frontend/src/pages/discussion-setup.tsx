@@ -30,7 +30,7 @@ export default function DiscussionSetup({ selectedCharacters, onBack, onLaunch }
 
         {/* Selected Theorists */}
         <div className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Your Selected Theorists:</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Your Selected Educators:</h2>
           <div className="flex gap-6 justify-center">
             {selectedCharacters.map((character, index) => (
               <div 
@@ -40,10 +40,10 @@ export default function DiscussionSetup({ selectedCharacters, onBack, onLaunch }
                 } min-w-[200px] text-center`}
               >
                 <div className="text-3xl mb-2">
-                  {index === 0 ? '🎓' : '🌱'}
+                  {index === 0 ? '🎓' : index === 1 ? '🌱' : index === 2 ? '📚' : '🔬'}
                 </div>
                 <h3 className="font-bold text-lg text-gray-900">{character.name}</h3>
-                <p className="text-sm text-gray-600">1859-1952</p>
+                <p className="text-sm text-gray-600">{character.role}</p>
               </div>
             ))}
           </div>
@@ -51,7 +51,7 @@ export default function DiscussionSetup({ selectedCharacters, onBack, onLaunch }
 
         {/* Discussion Topic */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Discussion Topic:</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Chat Topic:</h2>
           <Textarea
             placeholder="e.g., What is the most effective way to teach critical thinking to elementary students?"
             value={topic}
