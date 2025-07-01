@@ -323,4 +323,174 @@ Below is additional details for the project:
 
 3. **User Data Requirements**:
    - What specific user behaviors need to be logged? User selection of characters and text inputs will be stored. 
-   - Transcripts of chat sessions (user, characters) will be systematically stored for later retrieval or analysis. 
+   - Transcripts of chat sessions (user, characters) will be systematically stored for later retrieval or analysis.
+
+## Production Deployment Troubleshooting Guide
+
+### Common Issues and Solutions
+
+#### 1. Database Migration Failures with SQLite + Alembic
+
+**Problem**: Alembic migrations fail in production with "Circular dependency detected" or similar SQLite errors.
+
+**Root Cause**: SQLite has limitations with complex ALTER TABLE operations, especially when adding multiple columns with foreign keys in batch operations.
+
+**Solution**: Use direct SQLite schema updates in startup script as fallback:
+
+```python
+# In startup.py
+import sqlite3
+
+def ensure_database_schema():
+    """Ensure the database has the required columns"""
+    db_path = "/data/app.db"
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        # Check and add missing columns individually
+        cursor.execute("PRAGMA table_info(conversations)")
+        conversations_columns = [row[1] for row in cursor.fetchall()]
+        
+        if 'user_id' not in conversations_columns:
+            cursor.execute("ALTER TABLE conversations ADD COLUMN user_id INTEGER")
+        
+        # Repeat for other tables/columns as needed
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error updating database schema: {e}")
+```
+
+**Prevention**: 
+- Split complex migrations into separate, smaller migrations
+- Test migrations thoroughly in development with SQLite
+- Consider using PostgreSQL for production if schema complexity grows
+
+#### 2. CORS Errors in Production
+
+**Problem**: Frontend gets CORS errors despite backend deployment success.
+
+**Symptoms**: 
+```
+Access to fetch at 'https://backend.fly.dev/api/endpoint' from origin 'https://frontend.vercel.app' 
+has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present
+```
+
+**Root Cause**: Environment variables not properly set as secrets in Fly.io.
+
+**Solution**:
+```bash
+# Set CORS origins as Fly.io secrets (not in fly.toml)
+flyctl secrets set 'CORS_ORIGINS=["http://localhost:5173", "https://your-frontend.vercel.app"]' -a your-app
+
+# Set other required secrets
+flyctl secrets set SUPABASE_URL="your_url" -a your-app
+flyctl secrets set SUPABASE_KEY="your_key" -a your-app
+flyctl secrets set ANTHROPIC_API_KEY="your_key" -a your-app
+
+# Verify secrets are set
+flyctl secrets list -a your-app
+```
+
+**Verification**:
+```bash
+# Test CORS headers
+curl -I -H "Origin: https://your-frontend.vercel.app" https://your-backend.fly.dev/api/endpoint
+# Should return: access-control-allow-origin: https://your-frontend.vercel.app
+```
+
+#### 3. Missing Dependencies Causing Crashes
+
+**Problem**: App crashes with `ImportError: package is not installed` errors.
+
+**Common Example**: 
+```
+ImportError: email-validator is not installed, run `pip install pydantic[email]`
+```
+
+**Solution**: Update requirements.txt with proper package specifications:
+```
+# Change from:
+pydantic==2.5.0
+
+# To:
+pydantic[email]==2.5.0
+```
+
+#### 4. Environment Variable Loading Issues
+
+**Problem**: Environment variables return None values, causing authentication failures.
+
+**Root Cause**: Using `os.getenv()` instead of pydantic settings system.
+
+**Solution**: Always use pydantic-settings for environment variable management:
+```python
+# Wrong:
+import os
+supabase_url = os.getenv("SUPABASE_URL")
+
+# Correct:
+from .config import settings
+supabase_url = settings.SUPABASE_URL
+```
+
+#### 5. Git Tracking Virtual Environment Files
+
+**Problem**: Git tracks thousands of venv files despite .gitignore.
+
+**Solution**:
+```bash
+# Remove from git tracking but keep local files
+git rm -r --cached backend/venv
+
+# Commit the removal
+git commit -m "Remove venv files from git tracking"
+
+# Ensure .gitignore contains:
+backend/venv/
+backend/.venv/
+```
+
+### Deployment Checklist
+
+Before deploying to production:
+
+1. **Environment Variables**:
+   - [ ] All secrets set in Fly.io (not in fly.toml)
+   - [ ] Frontend environment variables set in Vercel
+   - [ ] CORS_ORIGINS includes production frontend URL
+
+2. **Database**:
+   - [ ] Migrations tested locally with SQLite
+   - [ ] Startup script includes schema fallback
+   - [ ] Database volume properly mounted (/data)
+
+3. **Dependencies**:
+   - [ ] All required packages in requirements.txt
+   - [ ] Package extras included (e.g., pydantic[email])
+   - [ ] No sensitive data in git repository
+
+4. **Testing**:
+   - [ ] Health endpoint responds: `curl https://backend.fly.dev/health`
+   - [ ] CORS headers present: `curl -I -H "Origin: https://frontend.vercel.app" https://backend.fly.dev/api/endpoint`
+   - [ ] API returns proper errors (401) not crashes (500)
+
+### Monitoring Commands
+
+```bash
+# Check app status
+flyctl status -a your-app
+
+# View logs
+flyctl logs -a your-app
+
+# Check secrets
+flyctl secrets list -a your-app
+
+# SSH into machine (if needed)
+flyctl ssh console -a your-app
+
+# Restart app
+flyctl machine restart <machine-id> -a your-app
+``` 
