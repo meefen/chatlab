@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { get, post } from "@/services/api";
+import { get, post, del } from "@/services/api";
 import type { Conversation } from "@/types/api";
 
 export function useConversations() {
@@ -62,11 +62,21 @@ export function useConversations() {
     },
   });
 
+  const deleteConversation = useMutation({
+    mutationFn: async (conversationId: number) => {
+      return del(`/api/conversations/${conversationId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["conversations"] });
+    },
+  });
+
   return {
     ...query,
     createConversation,
     addUserMessage,
     generateResponse,
     generateTitle,
+    deleteConversation,
   };
 }

@@ -82,6 +82,30 @@ async def update_conversation(
     db.refresh(conversation)
     return conversation
 
+@router.delete("/{conversation_id}")
+async def delete_conversation(
+    conversation_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # Only allow deletion of user's own conversations
+    conversation = db.query(Conversation).filter(
+        Conversation.id == conversation_id,
+        Conversation.user_id == current_user.id
+    ).first()
+    
+    if not conversation:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    
+    # Delete associated messages first (due to foreign key constraints)
+    db.query(Message).filter(Message.conversation_id == conversation_id).delete()
+    
+    # Delete the conversation
+    db.delete(conversation)
+    db.commit()
+    
+    return {"message": "Conversation deleted successfully"}
+
 @router.post("/{conversation_id}/messages", response_model=MessageResponse)
 async def create_message(
     conversation_id: int, 

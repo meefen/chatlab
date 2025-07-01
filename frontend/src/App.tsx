@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import Home from "@/pages/home-simple";
+import Home from "@/pages/home";
 import AuthPage from "@/pages/auth";
 import AuthCallback from "@/pages/auth-callback";
 import NotFound from "@/pages/not-found";
