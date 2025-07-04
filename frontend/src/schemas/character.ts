@@ -5,7 +5,7 @@ export const insertCharacterSchema = z.object({
   role: z.string().min(1, "Role is required"),
   personality: z.string().min(1, "Personality is required"),
   avatar_url: z.string().optional(),
-  is_active: z.boolean().default(true),
+  is_public: z.boolean().default(false),
 });
 
 export type InsertCharacter = z.infer<typeof insertCharacterSchema>;

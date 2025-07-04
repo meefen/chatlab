@@ -21,7 +21,7 @@ export function SignUpForm({ onToggleMode, onSuccess }: SignUpFormProps) {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   
-  const { signUp, signInWithGoogle } = useAuth()
+  const { signUp, signInWithGoogle, signInWithMicrosoft } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -66,6 +66,22 @@ export function SignUpForm({ onToggleMode, onSuccess }: SignUpFormProps) {
       }
     } catch (err) {
       setError('Failed to sign up with Google')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleMicrosoftSignUp = async () => {
+    setLoading(true)
+    setError(null)
+
+    try {
+      const { error } = await signInWithMicrosoft()
+      if (error) {
+        setError(error.message)
+      }
+    } catch (err) {
+      setError('Failed to sign up with Microsoft')
     } finally {
       setLoading(false)
     }
@@ -180,15 +196,27 @@ export function SignUpForm({ onToggleMode, onSuccess }: SignUpFormProps) {
           </div>
         </div>
 
-        <Button
-          variant="outline"
-          className="w-full"
-          onClick={handleGoogleSignUp}
-          disabled={loading}
-        >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Continue with Google
-        </Button>
+        <div className="grid grid-cols-1 gap-3">
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={handleGoogleSignUp}
+            disabled={loading}
+          >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Continue with Google
+          </Button>
+          
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={handleMicrosoftSignUp}
+            disabled={loading}
+          >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Continue with Microsoft
+          </Button>
+        </div>
 
         <div className="text-center text-sm">
           Already have an account?{' '}

@@ -493,4 +493,81 @@ flyctl ssh console -a your-app
 
 # Restart app
 flyctl machine restart <machine-id> -a your-app
-``` 
+```
+
+## Development Debugging Guide
+
+### API 500 Internal Server Error Debugging
+
+**Problem**: Frontend gets "500 Internal Server Error" when making API requests, especially after database schema changes.
+
+**Symptoms**: 
+- CORS error initially, then 500 error after CORS is fixed
+- Frontend shows "Failed to save" error messages
+- Backend logs may not show detailed error info
+
+**Common Root Causes & Debugging Steps**:
+
+1. **Database Schema Mismatch** (Most Common):
+   ```bash
+   # Check if database schema matches SQLAlchemy models
+   source venv/bin/activate
+   python -c "
+   from app.database import engine
+   from sqlalchemy import inspect
+   inspector = inspect(engine)
+   print('Actual DB columns:')
+   for col in inspector.get_columns('table_name'):
+       print(f'  {col[\"name\"]}: {col[\"type\"]} (nullable: {col[\"nullable\"]})')
+   "
+   ```
+
+2. **Check SQLAlchemy Model vs Database**:
+   ```bash
+   # Compare model expectations with database reality
+   # Look for columns that exist in DB but not in model, or vice versa
+   # Common issues: old columns not removed, wrong defaults, missing FK constraints
+   ```
+
+3. **Authentication Issues**:
+   ```bash
+   # Test endpoint with curl to isolate auth vs schema issues
+   curl -X POST http://localhost:8000/api/endpoint/ \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer fake-token" \
+     -d '{"test":"data"}' -v
+   ```
+
+4. **Fix Database Schema Mismatch**:
+   ```python
+   # If schema mismatch found, manually fix database:
+   import sqlite3
+   conn = sqlite3.connect('app.db')
+   cursor = conn.cursor()
+   
+   # Backup data
+   cursor.execute('SELECT * FROM problematic_table')
+   backup_data = cursor.fetchall()
+   
+   # Recreate table with correct schema
+   cursor.execute('DROP TABLE problematic_table')
+   cursor.execute('CREATE TABLE problematic_table (...correct_schema...)')
+   
+   # Restore data
+   cursor.executemany('INSERT INTO ...', backup_data)
+   conn.commit()
+   ```
+
+**Prevention**: 
+- Always restart backend after model changes
+- Run database migrations in development first
+- Use startup.py script to handle schema transitions
+- Test API endpoints with curl before frontend testing
+
+**Quick Diagnostic Checklist**:
+- [ ] Backend server running and responsive
+- [ ] CORS headers present in response
+- [ ] Database schema matches SQLAlchemy models exactly
+- [ ] Authentication token being sent correctly
+- [ ] No extra columns in database that aren't in model
+- [ ] Default values in database match model defaults 

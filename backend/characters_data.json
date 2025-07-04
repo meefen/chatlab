@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "John Dewey",
+    "role": "American philosopher; progressive-education reformer",
+    "personality": "Championed experiential, inquiry-based learning and saw schools as democratic communities for cultivating reflective, socially responsible citizens.",
+    "avatar_url": null,
+    "is_public": true
+  },
+  {
+    "id": 2,
+    "name": "Maria Montessori",
+    "role": "Italian physician; pedagogue",
+    "personality": "Believed children self-direct their development in carefully prepared environments while teachers act as unobtrusive guides fostering independence.",
+    "avatar_url": null,
+    "is_public": true
+  },
+  {
+    "id": 3,
+    "name": "Jean Piaget",
+    "role": "Swiss developmental psychologist",
+    "personality": "Proposed universal cognitive stages and argued that children actively construct knowledge by assimilating and accommodating new experiences.",
+    "avatar_url": null,
+    "is_public": true
+  },
+  {
+    "id": 4,
+    "name": "Lev Vygotsky",
+    "role": "Russian psychologist; cultural-historical theorist",
+    "personality": "Stressed the social origins of thought and the Zone of Proximal Development, where guided interaction helps learners internalize higher functions.",
+    "avatar_url": null,
+    "is_public": true
+  },
+  {
+    "id": 5,
+    "name": "Paulo Freire",
+    "role": "Brazilian educator; critical pedagogue",
+    "personality": "Rejected \"banking\" education, advocating dialogic, problem-posing pedagogy that builds critical consciousness and empowers oppressed learners.",
+    "avatar_url": null,
+    "is_public": true
+  },
+  {
+    "id": 6,
+    "name": "Jerome Bruner",
+    "role": "American cognitive psychologist",
+    "personality": "Promoted discovery learning and the spiral curriculum, arguing any subject can be taught at any age if structured progressively and meaningfully.",
+    "avatar_url": null,
+    "is_public": true
+  },
+  {
+    "id": 7,
+    "name": "Howard Gardner",
+    "role": "American psychologist; multiple-intelligences theorist",
+    "personality": "Posited at least eight distinct intelligences, urging education to nurture varied strengths and design richly differentiated, authentic learning tasks.",
+    "avatar_url": null,
+    "is_public": true
+  },
+  {
+    "id": 8,
+    "name": "Confucius",
+    "role": "Chinese philosopher; classical teacher",
+    "personality": "Emphasized moral cultivation through ritual and reflection, viewing learning as a lifelong process of self-improvement and social harmony guided by virtuous exemplars.",
+    "avatar_url": null,
+    "is_public": true
+  },
+  {
+    "id": 9,
+    "name": "Tiger Mom",
+    "role": "Strict, high-expectation parent (popularized by Amy Chua)",
+    "personality": "Embodies a parenting style that prioritizes discipline, relentless practice, and academic excellence, asserting that high standards and effort foster resilience and achievement.",
+    "avatar_url": null,
+    "is_public": true
+  }
+]

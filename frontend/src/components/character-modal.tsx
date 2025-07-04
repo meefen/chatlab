@@ -41,8 +41,8 @@ export function CharacterModal({ open, onOpenChange, character }: CharacterModal
       name: "",
       role: "",
       personality: "",
-      avatarUrl: "",
-      isActive: true,
+      avatar_url: "",
+      is_public: false,
     },
   });
 
@@ -52,16 +52,16 @@ export function CharacterModal({ open, onOpenChange, character }: CharacterModal
         name: character.name,
         role: character.role,
         personality: character.personality,
-        avatarUrl: character.avatarUrl || "",
-        isActive: character.isActive,
+        avatar_url: character.avatar_url || "",
+        is_public: character.is_public,
       });
     } else {
       form.reset({
         name: "",
         role: "",
         personality: "",
-        avatarUrl: "",
-        isActive: true,
+        avatar_url: "",
+        is_public: false,
       });
     }
   }, [character, form]);
@@ -151,7 +151,7 @@ export function CharacterModal({ open, onOpenChange, character }: CharacterModal
             
             <FormField
               control={form.control}
-              name="avatarUrl"
+              name="avatar_url"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Avatar Image</FormLabel>
@@ -174,13 +174,13 @@ export function CharacterModal({ open, onOpenChange, character }: CharacterModal
 
             <FormField
               control={form.control}
-              name="isActive"
+              name="is_public"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                   <div className="space-y-0.5">
-                    <FormLabel>Active Character</FormLabel>
+                    <FormLabel>Make Public</FormLabel>
                     <div className="text-sm text-muted-foreground">
-                      Active characters can participate in conversations
+                      Public characters can be used by other users
                     </div>
                   </div>
                   <FormControl>

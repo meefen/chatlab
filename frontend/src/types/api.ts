@@ -1,10 +1,17 @@
+export interface CreatorInfo {
+  id: number;
+  full_name?: string;
+}
+
 export interface Character {
   id: number;
   name: string;
   role: string;
   personality: string;
   avatar_url?: string;
-  is_active: boolean;
+  is_public: boolean;
+  created_by_id?: number;
+  created_by?: CreatorInfo;
   created_at: string;
 }
 
@@ -13,7 +20,7 @@ export interface CharacterCreate {
   role: string;
   personality: string;
   avatar_url?: string;
-  is_active?: boolean;
+  is_public?: boolean;
 }
 
 export interface Conversation {

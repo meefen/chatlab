@@ -9,6 +9,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>
   signUp: (email: string, password: string, fullName?: string) => Promise<{ error: AuthError | null }>
   signInWithGoogle: () => Promise<{ error: AuthError | null }>
+  signInWithMicrosoft: () => Promise<{ error: AuthError | null }>
   signOut: () => Promise<{ error: AuthError | null }>
   getAccessToken: () => Promise<string | null>
 }
@@ -71,6 +72,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error }
   }
 
+  const signInWithMicrosoft = async () => {
+    const redirectUrl = `${window.location.origin}/auth/callback`
+    console.log('Microsoft SSO redirect URL:', redirectUrl)
+    
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'azure',
+      options: {
+        redirectTo: redirectUrl,
+        scopes: 'openid email profile',
+      },
+    })
+    return { error }
+  }
+
   const signOut = async () => {
     const { error } = await supabase.auth.signOut()
     return { error }
@@ -88,6 +103,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signIn,
     signUp,
     signInWithGoogle,
+    signInWithMicrosoft,
     signOut,
     getAccessToken,
   }

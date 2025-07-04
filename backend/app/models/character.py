@@ -11,9 +11,8 @@ class Character(Base):
     role = Column(String, nullable=False)
     personality = Column(String, nullable=False)
     avatar_url = Column(String)
-    is_active = Column(Boolean, default=True, nullable=False)
-    is_public = Column(Boolean, default=True, nullable=False)  # Public characters (default theorists) vs user-created
-    created_by_id = Column(Integer, ForeignKey("users.id"), nullable=True)  # Null for public characters
+    is_public = Column(Boolean, default=False, nullable=False)  # Whether character is public for all users
+    created_by_id = Column(Integer, ForeignKey("users.id"), nullable=True)  # Null for built-in characters
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     # Relationships

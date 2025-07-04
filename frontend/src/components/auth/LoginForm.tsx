@@ -18,7 +18,21 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   
-  const { signIn, signInWithGoogle } = useAuth()
+  const { signIn, signInWithGoogle, signInWithMicrosoft } = useAuth()
+
+  // Check for OAuth errors from callback
+  React.useEffect(() => {
+    const oauthError = sessionStorage.getItem('oauth_error')
+    if (oauthError) {
+      try {
+        const errorData = JSON.parse(oauthError)
+        setError(`Authentication failed: ${errorData.errorDescription || errorData.error}`)
+        sessionStorage.removeItem('oauth_error')
+      } catch (e) {
+        console.error('Error parsing OAuth error:', e)
+      }
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,6 +64,22 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
       }
     } catch (err) {
       setError('Failed to sign in with Google')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleMicrosoftSignIn = async () => {
+    setLoading(true)
+    setError(null)
+
+    try {
+      const { error } = await signInWithMicrosoft()
+      if (error) {
+        setError(error.message)
+      }
+    } catch (err) {
+      setError('Failed to sign in with Microsoft')
     } finally {
       setLoading(false)
     }
@@ -112,15 +142,27 @@ export function LoginForm({ onToggleMode, onSuccess }: LoginFormProps) {
           </div>
         </div>
 
-        <Button
-          variant="outline"
-          className="w-full"
-          onClick={handleGoogleSignIn}
-          disabled={loading}
-        >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Continue with Google
-        </Button>
+        <div className="grid grid-cols-1 gap-3">
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+          >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Continue with Google
+          </Button>
+          
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={handleMicrosoftSignIn}
+            disabled={loading}
+          >
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Continue with Microsoft
+          </Button>
+        </div>
 
         <div className="text-center text-sm">
           Don't have an account?{' '}

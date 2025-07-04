@@ -2,6 +2,15 @@
 
 A refactored web application with React frontend and FastAPI backend that allows users to engage in multi-character conversations with educational theorists.
 
+## Quick start
+
+```
+cd backend
+source venv/bin/activate && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload &
+
+cd ../frontend && npm run dev &
+```
+
 ## Architecture
 
 - **Frontend**: React with Vite (deployed on Vercel)

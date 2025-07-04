@@ -43,11 +43,43 @@ def ensure_database_schema():
         
         if 'is_public' not in characters_columns:
             print("Adding missing is_public column to characters table...")
-            cursor.execute("ALTER TABLE characters ADD COLUMN is_public BOOLEAN NOT NULL DEFAULT 1")
+            cursor.execute("ALTER TABLE characters ADD COLUMN is_public BOOLEAN NOT NULL DEFAULT 0")
             
         if 'created_by_id' not in characters_columns:
             print("Adding missing created_by_id column to characters table...")
             cursor.execute("ALTER TABLE characters ADD COLUMN created_by_id INTEGER")
+        
+        # Remove is_active column if it exists (we no longer need it)
+        if 'is_active' in characters_columns:
+            print("Removing deprecated is_active column from characters table...")
+            # SQLite doesn't support DROP COLUMN easily, so we'll recreate the table
+            # First, get the table structure and data (include id for preservation)
+            cursor.execute("SELECT id, name, role, personality, avatar_url, is_public, created_by_id, created_at FROM characters")
+            characters_data = cursor.fetchall()
+            
+            # Drop the old table
+            cursor.execute("DROP TABLE characters")
+            
+            # Create the new table without is_active
+            cursor.execute('''
+                CREATE TABLE characters (
+                    id INTEGER PRIMARY KEY,
+                    name VARCHAR NOT NULL,
+                    role VARCHAR NOT NULL,
+                    personality VARCHAR NOT NULL,
+                    avatar_url VARCHAR,
+                    is_public BOOLEAN NOT NULL DEFAULT 0,
+                    created_by_id INTEGER,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+            # Re-insert the data with proper ID preservation
+            for row in characters_data:
+                cursor.execute('''
+                    INSERT INTO characters (id, name, role, personality, avatar_url, is_public, created_by_id, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ''', row)
         
         conn.commit()
         conn.close()
