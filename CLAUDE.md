@@ -54,7 +54,7 @@ The chat history should be saved on the server for the user to review later, sim
 
 ### Backend
 - **Framework**: FastAPI (Python)
-- **Hosting**: Fly.io
+- **Hosting**: Render
 - **Key Features**:
   - RESTful API endpoints
   - User behavior logging
@@ -73,8 +73,8 @@ The chat history should be saved on the server for the user to review later, sim
   - JWT token handling
 
 ### Database
-- **Primary**: SQLite (hosted on Fly.io volumes)
-- **Migration path**: Fly Postgres when scaling is needed
+- **Primary**: PostgreSQL (hosted on Render)
+- **Development**: SQLite for local development
 - **ORM**: SQLAlchemy with Alembic for migrations
 - **Data storage**:
   - User profiles and preferences
@@ -96,7 +96,8 @@ fastapi
 uvicorn[standard]
 sqlalchemy
 alembic
-pydantic
+pydantic[email]
+pydantic-settings
 httpx
 supabase
 openai
@@ -104,6 +105,7 @@ anthropic
 python-multipart
 python-jose[cryptography]
 passlib[bcrypt]
+psycopg2-binary
 ```
 
 ### Frontend (React + Vite)
@@ -116,12 +118,13 @@ axios or fetch
 
 ## Deployment Strategy
 
-### Backend Deployment (Fly.io)
-- Dockerized FastAPI application
-- SQLite database on persistent volumes
+### Backend Deployment (Render)
+- Native Python application deployment
+- PostgreSQL database (managed)
 - Environment variables for API keys and configuration
 - Health check endpoints
 - CORS configuration for frontend domain
+- Automatic deployment from Git repository
 
 ### Frontend Deployment (Vercel)
 - Automatic deployment from Git repository
@@ -142,18 +145,24 @@ backend/
 │   ├── api/                   # API route handlers
 │   │   ├── auth.py
 │   │   ├── users.py
-│   │   ├── data.py
+│   │   ├── characters.py
+│   │   ├── conversations.py
 │   │   └── ai.py
 │   ├── models/                # SQLAlchemy models
 │   ├── schemas/               # Pydantic schemas
 │   ├── services/              # Business logic
-│   │   ├── external_api.py
-│   │   ├── ai_service.py
-│   │   └── user_service.py
+│   │   └── ai_service.py
 │   └── utils/                 # Utility functions
 ├── alembic/                   # Database migrations
-├── Dockerfile
-├── fly.toml
+├── characters/                # Default character data
+│   ├── characters_data.json
+│   └── insert_characters_sqlite.py
+├── migration/                 # Migration utilities (Fly.io → Render)
+│   ├── export_sqlite_data.py
+│   ├── import_postgresql_data.py
+│   └── migration_data/
+├── render.yaml                # Render deployment config
+├── startup.py                 # Application startup script
 ├── requirements.txt
 └── .env.example
 ```
@@ -180,21 +189,33 @@ frontend/
 
 ### Backend (.env)
 ```
+# Database (auto-configured in production)
 DATABASE_URL=sqlite:///./app.db
+
+# Authentication
 SUPABASE_URL=your_supabase_url
 SUPABASE_KEY=your_supabase_anon_key
+
+# AI APIs
 OPENAI_API_KEY=your_openai_key
 ANTHROPIC_API_KEY=your_anthropic_key
-EXTERNAL_API_KEY=your_external_api_key
-EXTERNAL_API_BASE_URL=https://api.external-platform.com
-CORS_ORIGINS=["https://your-frontend-domain.vercel.app"]
+AI_PROVIDER=anthropic
+
+# CORS
+CORS_ORIGINS=["http://localhost:5173", "https://your-frontend-domain.vercel.app"]
+
+# Environment
+ENVIRONMENT=development
 ```
 
 ### Frontend (.env)
 ```
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-VITE_API_BASE_URL=https://your-backend.fly.dev
+VITE_API_BASE_URL=http://localhost:8000
+
+# Production (.env.production)
+# VITE_API_BASE_URL=https://your-backend.onrender.com
 ```
 
 ## Core Functionality Requirements
@@ -234,47 +255,38 @@ VITE_API_BASE_URL=https://your-backend.fly.dev
 
 ## Deployment Configuration
 
-### Fly.io Configuration (fly.toml)
-```toml
-app = "chatlab"
-primary_region = "sjc"
+### Render Configuration (render.yaml)
+```yaml
+services:
+  # FastAPI Backend Web Service
+  - type: web
+    name: chatlab-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python startup.py"
+    healthCheckPath: "/health"
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PORT
+        value: 8000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: chatlab-db
+          property: connectionString
+      - key: AI_PROVIDER
+        value: anthropic
+      # Additional environment variables set as secrets
 
-[build]
-  dockerfile = "Dockerfile"
-
-[env]
-  PORT = "8000"
-
-[[services]]
-  http_checks = []
-  internal_port = 8000
-  processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
-
-  [services.concurrency]
-    hard_limit = 25
-    soft_limit = 20
-    type = "connections"
-
-  [[services.ports]]
-    force_https = true
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
-
-  [[services.tcp_checks]]
-    grace_period = "1s"
-    interval = "15s"
-    restart_limit = 0
-    timeout = "2s"
-
-[mounts]
-  source = "data"
-  destination = "/data"
+  # PostgreSQL Database
+  - type: pserv
+    name: chatlab-db
+    databaseName: chatlab
+    databaseUser: chatlab_user
+    region: oregon
+    plan: free
 ```
 
 ## Development Workflow
@@ -293,7 +305,7 @@ primary_region = "sjc"
 cd backend
 pip install -r requirements.txt
 alembic upgrade head
-uvicorn app.main:app --reload
+python startup.py  # or uvicorn app.main:app --reload
 
 # Frontend
 cd frontend
@@ -303,11 +315,11 @@ npm run dev
 
 ### Deployment Commands
 ```bash
-# Backend to Fly.io
-flyctl deploy
+# Backend to Render (automatic from Git)
+git push origin main
 
-# Frontend to Vercel
-git push origin main  # Auto-deployment
+# Frontend to Vercel (automatic from Git)
+git push origin main
 ```
 
 ## Additional Information
@@ -329,43 +341,31 @@ Below is additional details for the project:
 
 ### Common Issues and Solutions
 
-#### 1. Database Migration Failures with SQLite + Alembic
+#### 1. Render Deployment Issues
 
-**Problem**: Alembic migrations fail in production with "Circular dependency detected" or similar SQLite errors.
+**Problem**: Build or deployment failures on Render.
 
-**Root Cause**: SQLite has limitations with complex ALTER TABLE operations, especially when adding multiple columns with foreign keys in batch operations.
+**Common Causes**:
+- Missing dependencies in requirements.txt
+- Incorrect Python version
+- Build command errors
 
-**Solution**: Use direct SQLite schema updates in startup script as fallback:
+**Solution**: 
+```bash
+# Check build logs in Render dashboard
+# Ensure all dependencies are specified:
+pip install -r requirements.txt
 
-```python
-# In startup.py
-import sqlite3
-
-def ensure_database_schema():
-    """Ensure the database has the required columns"""
-    db_path = "/data/app.db"
-    try:
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-        
-        # Check and add missing columns individually
-        cursor.execute("PRAGMA table_info(conversations)")
-        conversations_columns = [row[1] for row in cursor.fetchall()]
-        
-        if 'user_id' not in conversations_columns:
-            cursor.execute("ALTER TABLE conversations ADD COLUMN user_id INTEGER")
-        
-        # Repeat for other tables/columns as needed
-        conn.commit()
-        conn.close()
-    except Exception as e:
-        print(f"Error updating database schema: {e}")
+# Test build locally:
+cd backend
+pip install -r requirements.txt
+python startup.py
 ```
 
-**Prevention**: 
-- Split complex migrations into separate, smaller migrations
-- Test migrations thoroughly in development with SQLite
-- Consider using PostgreSQL for production if schema complexity grows
+**Prevention**:
+- Test requirements.txt locally before deploying
+- Use specific package versions
+- Include all extras (e.g., pydantic[email])
 
 #### 2. CORS Errors in Production
 
@@ -373,30 +373,27 @@ def ensure_database_schema():
 
 **Symptoms**: 
 ```
-Access to fetch at 'https://backend.fly.dev/api/endpoint' from origin 'https://frontend.vercel.app' 
+Access to fetch at 'https://backend.onrender.com/api/endpoint' from origin 'https://frontend.vercel.app' 
 has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present
 ```
 
-**Root Cause**: Environment variables not properly set as secrets in Fly.io.
+**Root Cause**: Environment variables not properly set in Render.
 
 **Solution**:
-```bash
-# Set CORS origins as Fly.io secrets (not in fly.toml)
-flyctl secrets set 'CORS_ORIGINS=["http://localhost:5173", "https://your-frontend.vercel.app"]' -a your-app
-
-# Set other required secrets
-flyctl secrets set SUPABASE_URL="your_url" -a your-app
-flyctl secrets set SUPABASE_KEY="your_key" -a your-app
-flyctl secrets set ANTHROPIC_API_KEY="your_key" -a your-app
-
-# Verify secrets are set
-flyctl secrets list -a your-app
+1. Go to Render service dashboard
+2. Navigate to Environment tab
+3. Add environment variables:
+```
+CORS_ORIGINS=["http://localhost:5173", "https://your-frontend.vercel.app"]
+SUPABASE_URL=your_url
+SUPABASE_KEY=your_key
+ANTHROPIC_API_KEY=your_key
 ```
 
 **Verification**:
 ```bash
 # Test CORS headers
-curl -I -H "Origin: https://your-frontend.vercel.app" https://your-backend.fly.dev/api/endpoint
+curl -I -H "Origin: https://your-frontend.vercel.app" https://your-backend.onrender.com/api/endpoint
 # Should return: access-control-allow-origin: https://your-frontend.vercel.app
 ```
 
@@ -457,42 +454,38 @@ backend/.venv/
 Before deploying to production:
 
 1. **Environment Variables**:
-   - [ ] All secrets set in Fly.io (not in fly.toml)
+   - [ ] All environment variables set in Render dashboard
    - [ ] Frontend environment variables set in Vercel
    - [ ] CORS_ORIGINS includes production frontend URL
 
 2. **Database**:
-   - [ ] Migrations tested locally with SQLite
-   - [ ] Startup script includes schema fallback
-   - [ ] Database volume properly mounted (/data)
+   - [ ] PostgreSQL service created in Render
+   - [ ] Database connection string configured
+   - [ ] Startup script handles both SQLite and PostgreSQL
 
 3. **Dependencies**:
    - [ ] All required packages in requirements.txt
    - [ ] Package extras included (e.g., pydantic[email])
+   - [ ] psycopg2-binary included for PostgreSQL
    - [ ] No sensitive data in git repository
 
 4. **Testing**:
-   - [ ] Health endpoint responds: `curl https://backend.fly.dev/health`
-   - [ ] CORS headers present: `curl -I -H "Origin: https://frontend.vercel.app" https://backend.fly.dev/api/endpoint`
+   - [ ] Health endpoint responds: `curl https://backend.onrender.com/health`
+   - [ ] CORS headers present: `curl -I -H "Origin: https://frontend.vercel.app" https://backend.onrender.com/api/endpoint`
    - [ ] API returns proper errors (401) not crashes (500)
 
 ### Monitoring Commands
 
 ```bash
-# Check app status
-flyctl status -a your-app
+# Check app status in Render dashboard
+# View logs in Render dashboard
 
-# View logs
-flyctl logs -a your-app
+# Test endpoints
+curl https://your-app.onrender.com/health
+curl https://your-app.onrender.com/api/characters/
 
-# Check secrets
-flyctl secrets list -a your-app
-
-# SSH into machine (if needed)
-flyctl ssh console -a your-app
-
-# Restart app
-flyctl machine restart <machine-id> -a your-app
+# Check CORS
+curl -I -H "Origin: https://your-frontend.vercel.app" https://your-app.onrender.com/api/characters/
 ```
 
 ## Development Debugging Guide

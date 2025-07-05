@@ -121,11 +121,19 @@ def import_conversations(session, data):
                 print(f"Conversation {conv_data['id']} already exists, skipping...")
                 continue
             
+            # Handle null user_id by assigning to the first user
+            user_id = conv_data.get('user_id')
+            if user_id is None:
+                # Assign to first available user
+                first_user = session.query(User).first()
+                user_id = first_user.id if first_user else 1
+                print(f"  Assigning conversation '{conv_data['title']}' to user {user_id}")
+            
             conversation = Conversation(
                 id=conv_data['id'],
                 title=conv_data['title'],
                 participant_ids=conv_data['participant_ids'],
-                user_id=conv_data['user_id'],
+                user_id=user_id,
                 is_autonomous=conv_data.get('is_autonomous', False),
                 current_turn=conv_data.get('current_turn', 0),
                 created_at=datetime.fromisoformat(conv_data['created_at'].replace('Z', '+00:00')) if conv_data.get('created_at') else None,

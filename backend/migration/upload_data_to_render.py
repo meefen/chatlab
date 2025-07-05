@@ -107,10 +107,8 @@ def main():
         print("❌ No data to import. Make sure migration_data/ directory exists with JSON files.")
         return
     
-    proceed = input(f"\nProceed with import? (y/N): ").strip().lower()
-    if proceed != 'y':
-        print("Import cancelled.")
-        return
+    # Auto-proceed for automation
+    print(f"\n🚀 Proceeding with import of {total_records} records...")
     
     # Upload data
     success = upload_to_render(base_url, data)
