@@ -38,8 +38,6 @@ services:
     env: postgresql
     region: oregon
     plan: free
-    databaseName: chatlab
-    databaseUser: chatlab_user
 
 # Optional: Static site for frontend (if you want to host frontend on Render too)
 # - type: web
