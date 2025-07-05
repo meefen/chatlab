@@ -1,6 +1,17 @@
 import { supabase } from '../lib/supabase';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+// Determine API base URL based on environment
+const getApiBaseUrl = () => {
+  // Check if we're in production (Vercel deployment)
+  if (window.location.hostname.includes('vercel.app') || window.location.hostname.includes('chatlab-orcin')) {
+    return 'https://chatlab-backend.onrender.com';
+  }
+  
+  // Use environment variable or default to localhost
+  return import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 export async function apiRequest(
   method: string,
