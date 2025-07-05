@@ -35,7 +35,8 @@ services:
   # PostgreSQL Database
   - type: pserv
     name: chatlab-db
-    env: postgresql
+    databaseName: chatlab
+    databaseUser: chatlab_user
     region: oregon
     plan: free
 
