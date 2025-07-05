@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from sqlalchemy import text
 import time
 import logging
 
@@ -56,3 +57,36 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
+
+@app.get("/health/database")
+async def database_health_check():
+    """Check database connectivity and return database information"""
+    try:
+        from .database import get_database_info, engine
+        
+        # Test database connection
+        with engine.connect() as conn:
+            # Get database info
+            db_info = get_database_info()
+            
+            # Test a simple query
+            result = conn.execute(text("SELECT 1"))
+            query_result = result.scalar()
+            
+            return {
+                "status": "healthy",
+                "database": {
+                    "type": "PostgreSQL" if db_info["is_postgresql"] else "SQLite",
+                    "environment": db_info["environment"],
+                    "connection": "successful",
+                    "query_test": "passed" if query_result == 1 else "failed"
+                }
+            }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": {
+                "connection": "failed",
+                "error": str(e)
+            }
+        }
