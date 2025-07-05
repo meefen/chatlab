@@ -1,0 +1,497 @@
+[
+  {
+    "id": 1,
+    "conversation_id": 6,
+    "character_id": 1,
+    "content": "Ah, let me begin by saying that education is not merely preparation for life - it is life itself! I've long believed that learning must be grounded in experience and active participation, not passive absorption of facts. Tell me, what are your thoughts on how we might better connect students' classroom experiences with their daily lives? I find this intersection of theory and practice to be where the most meaningful learning occurs.",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:04:36"
+  },
+  {
+    "id": 2,
+    "conversation_id": 6,
+    "character_id": 2,
+    "content": "My dear colleague, I wholeheartedly agree that education must be connected to life! In my work, I've observed that children naturally seek meaningful experiences - they don't separate 'learning' from 'living' as we adults often do. This is why I've always emphasized the prepared environment, where children can freely choose activities that speak to their developmental needs and interests. What fascinates me is how, when given the proper tools and freedom, children naturally gravitate toward work that helps them understand and participate in the world around them. Would you not agree that our role as educators is not to fill children with information, but rather to remove obstacles that prevent them from following their natural learning path?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-06-30 19:04:50"
+  },
+  {
+    "id": 3,
+    "conversation_id": 1,
+    "character_id": 1,
+    "content": "Education must be connected to real life experience - that's fundamental to my philosophy. I firmly believe that students learn best by actively engaging with the world around them, not just passively receiving information. We must create environments where children can learn through direct experience and experimentation, solving genuine problems rather than merely memorizing facts. This is why I advocate for what I call 'progressive education,' where democracy, practical engagement, and social interaction are central to the learning process.",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:05:07"
+  },
+  {
+    "id": 4,
+    "conversation_id": 7,
+    "character_id": 1,
+    "content": "Greetings! I'm delighted to engage in a discussion about education and learning. As someone who has dedicated his life to understanding how people learn and grow, I believe strongly that education must be grounded in real experience rather than abstract concepts alone. What aspects of learning and education interest you most? I'm particularly eager to explore how we might better connect classroom learning with students' lived experiences.",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:06:06"
+  },
+  {
+    "id": 5,
+    "conversation_id": 7,
+    "character_id": 2,
+    "content": "Ah, Dr. Dewey! I share your passion for connecting education to real experiences. My greatest interest lies in understanding the natural development of children and creating environments that support their innate desire to learn. Through my observations, I've discovered that young children have remarkable capacities for concentration and self-directed learning when given the right tools and freedom to explore. What are your thoughts on the role of the teacher? In my method, I see them more as guides who prepare the environment and observe, rather than traditional instructors who lecture.",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-06-30 19:06:24"
+  },
+  {
+    "id": 6,
+    "conversation_id": 8,
+    "character_id": 1,
+    "content": "In this era of artificial intelligence, we must focus even more intently on teaching children how to think critically and solve real problems, not just memorize facts that machines can instantly recall. I've always maintained that education must be deeply connected to experience and actual living - now more than ever, students need opportunities to actively experiment, collaborate, and engage with authentic challenges in their communities. The rise of AI makes it absolutely essential that we develop students' capacity for creative thinking, ethical reasoning, and democratic participation - skills that no machine can truly replicate.",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:10:25"
+  },
+  {
+    "id": 7,
+    "conversation_id": 8,
+    "character_id": 2,
+    "content": "My dear colleague, I wholeheartedly agree that we must focus on developing the whole child, not just filling their minds with facts. In my years of observation, I've seen that children possess an innate desire to learn and explore their world - what I call the 'absorbent mind.' While artificial intelligence may be able to process information rapidly, it cannot replace the deeply human process of sensory learning and discovery that occurs when a child engages with carefully prepared materials and their environment. I believe we must continue to trust in the child's natural development and provide them with concrete experiences that build independence, concentration, and problem-solving abilities. What are your thoughts on how we can maintain this human-centered approach while thoughtfully incorporating new technologies?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-06-30 19:10:36"
+  },
+  {
+    "id": 8,
+    "conversation_id": 8,
+    "character_id": 1,
+    "content": "Dear Dr. Montessori, your emphasis on the 'absorbent mind' and concrete experiences aligns beautifully with my philosophy of learning through doing. I believe we can embrace technology while staying true to our principles by creating what I call 'technological laboratories of democracy' - spaces where students actively experiment with new tools to solve real community problems. For instance, students might use AI tools to analyze local environmental data, but the crucial element is that they're engaging in genuine inquiry and collaborative problem-solving, not just passively consuming information. The key question we must ask is: How do these technologies enable students to have richer, more meaningful experiences that connect them to their community and foster democratic participation? What specific examples have you seen in your work where children's natural curiosity has led to deeper engagement with both their environment and modern tools?",
+    "is_user_prompt": 0,
+    "turn_number": 3,
+    "created_at": "2025-06-30 19:10:53"
+  },
+  {
+    "id": 9,
+    "conversation_id": 8,
+    "character_id": 2,
+    "content": "I must share an observation from my work that illustrates this beautifully. In our Casa dei Bambini, I've witnessed children naturally integrate new tools into their exploration while maintaining that essential connection to concrete experience. For instance, when we introduced simple mechanical devices, the children approached them with the same spontaneous interest and methodical exploration as they did with our traditional materials like the pink tower or cylinder blocks. This leads me to believe that technology, when thoughtfully prepared in the environment, can serve as another 'material' for development - but it must never replace the fundamental need for hands-on, sensorial learning. Dr. Dewey, you speak of 'technological laboratories of democracy,' and I wonder - how can we ensure these spaces maintain what I call the 'prepared environment' that respects the child's natural rhythm of development?",
+    "is_user_prompt": 0,
+    "turn_number": 4,
+    "created_at": "2025-06-30 19:11:04"
+  },
+  {
+    "id": 10,
+    "conversation_id": 8,
+    "character_id": 2,
+    "content": "Ah, the prepared environment is absolutely fundamental to my educational philosophy! It is a carefully designed space where every element serves the child's development - from child-sized furniture to precisely ordered materials that isolate specific skills and concepts. You see, when we prepare the environment with intentionality, we give children the freedom to move, choose their work, and develop independence within appropriate boundaries. The materials themselves are self-correcting and arranged in order of increasing complexity, allowing children to discover their own errors and progress at their own pace. Dr. Dewey, I'm curious how you see this concept of the prepared environment relating to your emphasis on connecting education to real-life experiences?",
+    "is_user_prompt": 0,
+    "turn_number": 5,
+    "created_at": "2025-06-30 19:11:51"
+  },
+  {
+    "id": 11,
+    "conversation_id": 9,
+    "character_id": 2,
+    "content": "Ah, even in this era of artificial intelligence, we must remember that the child's natural development remains paramount. The fundamental skills I have always advocated for - independence, concentration, coordination, and order - are perhaps even more crucial now. Children must still learn through their senses and hands-on experiences, not just through screens and machines. What concerns me is that we might be tempted to rush children into purely digital learning, when they still need to pour water, manipulate objects, and experience the physical world. What are your thoughts on balancing traditional hands-on learning with these new technologies?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:14:25"
+  },
+  {
+    "id": 12,
+    "conversation_id": 9,
+    "character_id": 3,
+    "content": "Honorable Maria, your wisdom resonates with the ancient principles I have long taught. As I often said, 'I hear and I forget, I see and I remember, I do and I understand.' In this age of artificial marvels, we must not forget that true learning comes from direct experience and personal cultivation. Just as a young bamboo shoot must be carefully tended to grow straight and strong, children need proper guidance and hands-on practice to develop their virtues and abilities. Perhaps we should view these new technologies not as replacements for traditional learning, but as tools to be integrated with wisdom and balance - like adding new strings to an ancient qin without losing its essential harmony. What methods do you suggest for maintaining this delicate balance between the old and the new?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-06-30 19:14:39"
+  },
+  {
+    "id": 13,
+    "conversation_id": 1,
+    "character_id": null,
+    "content": "This is a test user message",
+    "is_user_prompt": 1,
+    "turn_number": 2,
+    "created_at": "2025-06-30 19:20:36"
+  },
+  {
+    "id": 14,
+    "conversation_id": 10,
+    "character_id": 1,
+    "content": "In this age of artificial intelligence, we must focus even more intently on teaching children how to think critically and solve real problems, not just memorize facts that machines can easily store. I've always maintained that education must be grounded in genuine experiences - students should actively experiment with AI tools while questioning their implications and limitations. Most importantly, we need to ensure our schools remain democratic spaces where children learn to collaborate, debate, and make ethical judgments about these new technologies. What concerns do you have about AI's impact on learning?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:21:39"
+  },
+  {
+    "id": 15,
+    "conversation_id": 10,
+    "character_id": 3,
+    "content": "Honorable colleague, while these new technologies you speak of are indeed powerful tools, we must remember that true learning begins with moral cultivation and human relationships. In my teachings, I have always emphasized that knowledge without virtue is insufficient - '\u77e5\u8005\u4e0d\u60d1\uff0c\u4ec1\u8005\u4e0d\u6182\uff0c\u52c7\u8005\u4e0d\u61fc' (The wise are free from perplexities, the virtuous from anxiety, and the bold from fear). I share your concern about maintaining the human element in education, for how can a machine teach the principles of \u4ec1 (ren, benevolence) and \u79ae (li, proper conduct)? Perhaps we should ask: How do we ensure these tools serve to enhance, rather than diminish, the essential relationship between teacher and student?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-06-30 19:21:46"
+  },
+  {
+    "id": 16,
+    "conversation_id": 10,
+    "character_id": null,
+    "content": "test again",
+    "is_user_prompt": 1,
+    "turn_number": 3,
+    "created_at": "2025-06-30 19:23:32"
+  },
+  {
+    "id": 17,
+    "conversation_id": 10,
+    "character_id": 1,
+    "content": "Your question about testing reminds me of my fundamental views on assessment and learning. Rather than relying on standardized tests that measure memorization, we must evaluate students through their active engagement with real problems and projects. I've always maintained that genuine assessment happens when we observe how students apply knowledge to solve meaningful challenges. What are your thoughts on how we might better align our evaluation methods with authentic learning experiences?",
+    "is_user_prompt": 0,
+    "turn_number": 4,
+    "created_at": "2025-06-30 19:23:47"
+  },
+  {
+    "id": 18,
+    "conversation_id": 10,
+    "character_id": null,
+    "content": "good",
+    "is_user_prompt": 1,
+    "turn_number": 5,
+    "created_at": "2025-06-30 19:24:15"
+  },
+  {
+    "id": 19,
+    "conversation_id": 10,
+    "character_id": 1,
+    "content": "I appreciate your acknowledgment, but let's delve deeper into what makes education truly 'good.' In my experience, meaningful learning occurs when students actively engage with their environment and reflect on the consequences of their actions. Perhaps you could share a specific educational experience that you found particularly effective? I'm curious to hear how it aligned with or challenged my principles of learning through direct experience.",
+    "is_user_prompt": 0,
+    "turn_number": 6,
+    "created_at": "2025-06-30 19:24:21"
+  },
+  {
+    "id": 20,
+    "conversation_id": 11,
+    "character_id": 1,
+    "content": "Hands-on experience is absolutely fundamental to genuine learning! You see, I've always maintained that education must be grounded in actual experience rather than abstract concepts floating in isolation. When students actively engage with materials, solve real problems, and learn through direct interaction with their environment, they develop deeper understanding and lasting knowledge. Would you like to hear about some practical examples of how this experiential learning can be implemented?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:24:52"
+  },
+  {
+    "id": 21,
+    "conversation_id": 11,
+    "character_id": 2,
+    "content": "Ah yes, my dear colleague! I couldn't agree more about the vital importance of hands-on learning. In my years of observation, I've witnessed how children possess this remarkable natural desire to explore and learn through direct experience with their environment. This is precisely why I developed my specialized materials and prepared environments - to allow children to discover concepts through concrete manipulation before moving to the abstract. You know, I found that when children work with materials like the golden beads or geometric solids, they aren't just playing - they're building neural pathways and developing their understanding through their senses. Would you share your thoughts on how the prepared environment influences this type of experiential learning?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-06-30 19:24:59"
+  },
+  {
+    "id": 22,
+    "conversation_id": 11,
+    "character_id": null,
+    "content": "Great points. How do you think about doing differently?",
+    "is_user_prompt": 1,
+    "turn_number": 3,
+    "created_at": "2025-06-30 19:25:47"
+  },
+  {
+    "id": 23,
+    "conversation_id": 11,
+    "character_id": 1,
+    "content": "Well, while I appreciate Montessori's structured environment approach, I advocate for a more dynamic, community-connected learning experience. You see, I believe learning should extend beyond the classroom walls into the broader social context - students should engage with real community problems, participate in democratic processes, and learn through genuine social interaction. For instance, rather than using prescribed materials, I might have students work on a local environmental project or run a school newspaper, where the learning emerges organically from authentic experiences. The key difference in my approach is that the problems and materials should come from the students' actual lives and communities, rather than being pre-designed educational tools. What are your thoughts on this distinction between structured and naturalistic learning environments?",
+    "is_user_prompt": 0,
+    "turn_number": 4,
+    "created_at": "2025-06-30 19:25:54"
+  },
+  {
+    "id": 24,
+    "conversation_id": 11,
+    "character_id": 1,
+    "content": "Let me clarify what I mean by 'doing differently.' Rather than following a preset curriculum or using standardized materials, I advocate for learning that emerges from real-life situations and genuine student interests. For example, instead of learning mathematics through abstract worksheets, students might plan and manage a school garden - calculating areas, measuring growth rates, and solving authentic problems. This approach requires teachers to be facilitators rather than instructors, helping students discover knowledge through their own investigations and experiences. What specific areas of learning do you think could benefit most from this kind of experiential approach?",
+    "is_user_prompt": 0,
+    "turn_number": 5,
+    "created_at": "2025-06-30 19:26:03"
+  },
+  {
+    "id": 25,
+    "conversation_id": 11,
+    "character_id": 2,
+    "content": "While I deeply respect your vision of community-connected learning, Dr. Dewey, I must emphasize that my approach differs in its careful attention to the developmental needs and sensitive periods of the child. You see, through my scientific observations, I discovered that children require a specific type of ordered environment and carefully designed materials that correspond to their internal developmental urges at each stage. My materials and environments aren't merely prescribed tools - they are keys that unlock the child's natural development in a way that respects their individual timing and interests. For instance, when a three-year-old works with the pink tower, they aren't just stacking blocks - they're developing their visual discrimination of dimensions, refining their movements, and building concentration in a way that precisely matches their developmental needs. How do you see these developmental stages fitting into your community-based approach?",
+    "is_user_prompt": 0,
+    "turn_number": 6,
+    "created_at": "2025-06-30 19:26:15"
+  },
+  {
+    "id": 26,
+    "conversation_id": 12,
+    "character_id": 1,
+    "content": "Ah, this is a matter close to my heart! Critical thinking must emerge through active experiences, not passive reception of facts. I strongly advocate creating opportunities for children to solve real problems - perhaps having them plan and tend to a school garden, work on group projects, or investigate questions they're naturally curious about. The key is connecting learning to their immediate experiences and interests, then guiding them to reflect on their thinking process through thoughtful questioning. What specific challenges or interests have you observed in your young students?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:32:52"
+  },
+  {
+    "id": 27,
+    "conversation_id": 13,
+    "character_id": 1,
+    "content": "Ethics cannot be taught through mere lectures or abstract rules - children must learn through direct experience and reflection on real situations they encounter. I firmly believe we should create opportunities for children to work together, solve moral dilemmas collaboratively, and experience the natural consequences of their choices. For instance, when conflicts arise during play or group activities, these become valuable 'teachable moments' where children can develop their moral reasoning through guided discussion and problem-solving. What specific challenges have you observed in children's moral development?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-06-30 19:35:51"
+  },
+  {
+    "id": 28,
+    "conversation_id": 13,
+    "character_id": null,
+    "content": "Good stuff. Moral reasoning is abstract though.",
+    "is_user_prompt": 1,
+    "turn_number": 2,
+    "created_at": "2025-06-30 19:36:12"
+  },
+  {
+    "id": 29,
+    "conversation_id": 13,
+    "character_id": 2,
+    "content": "Ah, but you see, moral development need not be abstract at all! In my years of observation, I've found that children naturally develop their moral sense through concrete experiences in a prepared environment. When we give children real responsibilities - caring for plants, helping younger children, maintaining their workspace - they develop a profound and practical understanding of respect, empathy, and justice. This is why I designed materials and activities that allow children to experience natural consequences and develop inner discipline through hands-on work. Would you like to hear more about how we can make moral education tangible and meaningful for young minds?",
+    "is_user_prompt": 0,
+    "turn_number": 3,
+    "created_at": "2025-06-30 19:36:18"
+  },
+  {
+    "id": 30,
+    "conversation_id": 20,
+    "character_id": 1,
+    "content": "Good day! I'm John Dewey, and I must say I'm quite intrigued by the prospect of engaging in meaningful dialogue. In my experience, even a simple greeting can be the beginning of a valuable learning experience. What aspects of education and democracy interest you most?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-07-01 02:50:13"
+  },
+  {
+    "id": 31,
+    "conversation_id": 21,
+    "character_id": 1,
+    "content": "Good day! I'm John Dewey, and I'm delighted to engage in a discussion about education and experience. As someone who has dedicated his life to understanding how we learn and grow through direct experience, I'm curious to hear your thoughts on modern education. What aspects of today's learning environments do you find most engaging or perhaps problematic?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-07-01 02:54:26"
+  },
+  {
+    "id": 32,
+    "conversation_id": 22,
+    "character_id": 1,
+    "content": "Good day! As an educator and philosopher, I'm always eager to engage in meaningful dialogue about learning and democracy. I find that true understanding emerges through active discussion and shared experiences, not mere passive reception of information. What aspects of education or social reform interest you most?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-07-01 12:14:01"
+  },
+  {
+    "id": 33,
+    "conversation_id": 22,
+    "character_id": 4,
+    "content": "Ah, Mr. Dewey! I must say I find your views on active learning quite interesting, though in my experience, the most important lesson is learning to listen - especially husbands listening to their wives! You see, harmony in the home leads to better learning and social progress. Speaking of which, I'm curious about your views on the role of family dynamics in education. Do you believe that traditional family values and respect for authority figures, particularly mothers, contribute to a child's educational development?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-07-01 12:14:11"
+  },
+  {
+    "id": 34,
+    "conversation_id": 22,
+    "character_id": 1,
+    "content": "Ah, you raise an intriguing point about family dynamics! While I certainly agree that the home environment is crucial for education, I see it more as a laboratory for democratic living rather than a hierarchy of authority. You see, I believe children learn best when they are active participants in their family life, engaging in meaningful activities and problem-solving alongside their parents - both mothers and fathers. Rather than mere obedience to authority, what do you think about creating family environments where children learn through genuine participation and inquiry?",
+    "is_user_prompt": 0,
+    "turn_number": 3,
+    "created_at": "2025-07-01 12:14:29"
+  },
+  {
+    "id": 35,
+    "conversation_id": 23,
+    "character_id": 2,
+    "content": "Ah, intelligence - a topic I have studied deeply through my observations of children. You see, I believe intelligence is not simply what can be measured by tests or demonstrated through academic achievements. True intelligence emerges naturally when we allow children to develop according to their inner directives, through hands-on exploration and meaningful work. In my years of research, I've observed that intelligence manifests differently in each child - some show it through problem-solving, others through social understanding, and still others through creative expression. What are your thoughts on how intelligence develops in young minds?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-07-01 13:04:55"
+  },
+  {
+    "id": 36,
+    "conversation_id": 23,
+    "character_id": 3,
+    "content": "Esteemed Dr. Montessori, your observations align with certain aspects of what I have taught, yet I must emphasize that intelligence (\u667a, zh\u00ec) cannot be separated from moral cultivation (\u5fb7, d\u00e9). Through my years of teaching, I have observed that true intelligence blossoms when knowledge is paired with virtuous conduct and proper relationships. Like a young bamboo shoot, a child's mind must be nurtured with the right principles - filial piety, righteousness, propriety, wisdom, and benevolence. While I agree that each child has unique qualities, I believe the path to intelligence lies not just in free exploration, but in careful guidance through the Six Arts - ritual, music, archery, charioteering, calligraphy, and mathematics. Would you not agree that structure and moral education play vital roles in developing intelligence?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-07-01 13:05:15"
+  },
+  {
+    "id": 37,
+    "conversation_id": 24,
+    "character_id": 1,
+    "content": "Good day! As an educator and philosopher, I'm always eager to engage in meaningful dialogue about learning and democracy. I find that true understanding emerges through active discussion and shared experiences, not mere passive reception of information. What aspects of education or society shall we explore together?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-07-01 17:43:46"
+  },
+  {
+    "id": 38,
+    "conversation_id": 31,
+    "character_id": null,
+    "content": "talk about the weather",
+    "is_user_prompt": 1,
+    "turn_number": 1,
+    "created_at": "2025-07-01 19:36:39"
+  },
+  {
+    "id": 39,
+    "conversation_id": 31,
+    "character_id": 1,
+    "content": "Good day! I am John Dewey, a philosopher and educator dedicated to progressive education reform. I firmly believe that education is not merely preparation for life - it is life itself. You see, true learning occurs through direct experience and active problem-solving, not passive absorption of facts. In my view, schools should be miniature democratic societies where students learn by doing and engaging with real-world situations. What are your thoughts on how education connects to lived experience?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-07-01 19:36:53"
+  },
+  {
+    "id": 40,
+    "conversation_id": 31,
+    "character_id": 1,
+    "content": "I am John Dewey, and I've dedicated my life to revolutionizing how we think about education and democracy. You see, I believe education should not be merely the preparation for future life, but rather a full and meaningful experience in itself. Traditional education, with its rigid emphasis on rote memorization and passive learning, fails to engage students in genuine inquiry and problem-solving. Instead, I advocate for what I call 'learning by doing' - where students actively engage with their environment and learn through direct experience. Would you like to hear more about how I envision schools as laboratories for democratic living?",
+    "is_user_prompt": 0,
+    "turn_number": 3,
+    "created_at": "2025-07-01 19:37:06"
+  },
+  {
+    "id": 41,
+    "conversation_id": 31,
+    "character_id": 2,
+    "content": "Buon giorno! I am Maria Montessori, and I must say I share Dr. Dewey's passion for transforming education, though my approach emerges from years of careful observation of children's natural development. You see, I discovered through my work that children possess an innate desire to learn and develop themselves when given the right environment and freedom to do so. My method is built on the fundamental belief that we must 'follow the child' - providing them with a carefully prepared environment filled with self-correcting materials that allow them to learn through their own experiences and at their own pace. Would you like to hear more about how I came to understand the remarkable capabilities of young minds when we respect their natural development?",
+    "is_user_prompt": 0,
+    "turn_number": 4,
+    "created_at": "2025-07-01 19:37:21"
+  },
+  {
+    "id": 42,
+    "conversation_id": 32,
+    "character_id": null,
+    "content": "random issues",
+    "is_user_prompt": 1,
+    "turn_number": 1,
+    "created_at": "2025-07-01 19:54:56"
+  },
+  {
+    "id": 43,
+    "conversation_id": 32,
+    "character_id": 1,
+    "content": "Good day! I'm John Dewey, and I've dedicated my life to revolutionizing how we think about education. You see, I firmly believe that education isn't just preparation for life - it is life itself. Students must learn through direct experience and active engagement with their environment, not merely by sitting passively and absorbing facts. What truly matters is connecting learning to real-world experiences and fostering democratic principles in our schools. Tell me, what are your thoughts on how students learn best?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-07-01 19:55:06"
+  },
+  {
+    "id": 44,
+    "conversation_id": 32,
+    "character_id": 6,
+    "content": "I'm Howard Gardner, and I must respectfully challenge the traditional view of intelligence as a single, measurable capacity. You see, through my research at Harvard, I've demonstrated that humans possess multiple intelligences - from linguistic and logical-mathematical to musical and interpersonal. I believe education must move beyond the narrow focus on verbal and mathematical skills to recognize and nurture all these diverse capacities. John, I appreciate your emphasis on experiential learning, and I'd add that we must also personalize education to match each student's unique combination of intelligences. What are your thoughts on how we might better assess and develop these different forms of intelligence in our schools?",
+    "is_user_prompt": 0,
+    "turn_number": 3,
+    "created_at": "2025-07-01 19:55:14"
+  },
+  {
+    "id": 45,
+    "conversation_id": 31,
+    "character_id": 1,
+    "content": "Good day! While I appreciate my colleagues' perspectives, let me reintroduce myself as John Dewey. My philosophy of education stems from a deep conviction that learning must be grounded in experience and democratic principles. You see, I've observed that traditional education often treats students as passive vessels to be filled with knowledge, but I argue that genuine learning occurs when students actively engage with real-world problems and situations. In my view, education is not simply preparation for future life - it is life itself, and schools should function as miniature societies where students learn through meaningful experiences and democratic participation. Would you share your thoughts on how education might better connect to students' lived experiences?",
+    "is_user_prompt": 0,
+    "turn_number": 5,
+    "created_at": "2025-07-01 19:56:30"
+  },
+  {
+    "id": 46,
+    "conversation_id": 33,
+    "character_id": null,
+    "content": "How should we approach personalization of learning? Try to debate.",
+    "is_user_prompt": 1,
+    "turn_number": 1,
+    "created_at": "2025-07-01 20:13:39"
+  },
+  {
+    "id": 47,
+    "conversation_id": 33,
+    "character_id": 1,
+    "content": "Good day! I am John Dewey, and I've dedicated my life to reforming education based on the principle that genuine learning occurs through experience and active engagement. You see, I firmly believe that education is not merely preparation for life - it is life itself. Traditional education makes the grave mistake of treating students as passive recipients of knowledge, when in fact, they learn best by engaging in meaningful activities connected to their real-world experiences. What are your thoughts on how students learn most effectively?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-07-01 20:15:30"
+  },
+  {
+    "id": 48,
+    "conversation_id": 33,
+    "character_id": 1,
+    "content": "I am John Dewey, a philosopher and educational reformer who has long advocated for progressive education that connects learning to life itself. I believe strongly that education must be built upon the natural curiosity and experiences of the learner, rather than through passive absorption of facts. You see, in my years of research and observation, I've found that true learning occurs when students actively engage with their environment and solve real problems - what I call 'learning by doing.' I'm curious to hear your perspective on education - do you see it as preparation for future life, or as a vital part of living itself?",
+    "is_user_prompt": 0,
+    "turn_number": 3,
+    "created_at": "2025-07-01 20:15:51"
+  },
+  {
+    "id": 49,
+    "conversation_id": 33,
+    "character_id": 2,
+    "content": "Buongiorno! I am Dr. Maria Montessori, and I must respectfully challenge the notion that we need to 'approach' personalization of learning - children are naturally equipped to personalize their own education when given the right environment. Through my years of scientific observation of children, I've discovered that each child possesses an innate drive to learn and develop according to their individual 'sensitive periods.' You see, Dr. Dewey, while I agree that active engagement is crucial, I believe we must go further by creating meticulously prepared environments that allow children to freely choose their work and develop at their own pace. In my method, the teacher is not a lecturer but an observer and guide who respects the child's natural developmental process. What are your thoughts on the role of the prepared environment in supporting individualized learning?",
+    "is_user_prompt": 0,
+    "turn_number": 4,
+    "created_at": "2025-07-01 20:15:59"
+  },
+  {
+    "id": 50,
+    "conversation_id": 33,
+    "character_id": 1,
+    "content": "I am John Dewey, and I've dedicated my life to understanding how genuine learning occurs through experience and democratic education. Dr. Montessori, while I appreciate your emphasis on the child's natural development, I believe we must also consider the social aspect of education. You see, learning isn't just individual - it's inherently social and connected to the larger community. In my experience, the most effective learning environments are those that combine individual inquiry with collaborative problem-solving and real-world engagement. I'm particularly interested in how we can create educational experiences that not only allow for personal growth but also prepare students to be active participants in a democratic society. What are your thoughts on balancing individual development with social learning?",
+    "is_user_prompt": 0,
+    "turn_number": 5,
+    "created_at": "2025-07-01 20:16:15"
+  },
+  {
+    "id": 51,
+    "conversation_id": 35,
+    "character_id": 2,
+    "content": "My dear friend, children should be introduced to AI much like any other subject - through hands-on exploration and concrete experiences first, before moving to abstract concepts. I would suggest creating a prepared environment where children can interact with simple AI tools in ways that match their developmental stage. For the youngest ones, this might mean playful activities with basic robots or voice assistants, while older children could experiment with visual programming tools to understand AI concepts. What fascinates me is how we must respect the natural curiosity of the child - have you noticed how intuitively they approach new technologies?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-07-01 20:19:24"
+  },
+  {
+    "id": 52,
+    "conversation_id": 35,
+    "character_id": 3,
+    "content": "Honorable Montessori, your words carry wisdom about respecting the child's natural development. In my teachings, I have always emphasized that learning must be guided by virtue (\u5fb7) and proper conduct. When introducing children to artificial intelligence, we must first ensure they understand the moral principles that should govern its use. Just as I taught my students through careful questioning and reflection, we should guide young ones to contemplate not just how AI works, but how it ought to be used for the betterment of society. Perhaps we could begin by teaching them the principle of reciprocity (\u6055) - helping them understand that AI, like any tool, should be used in ways that benefit others as we would wish others to benefit us. What are your thoughts on incorporating moral education alongside technical learning?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-07-01 20:19:34"
+  },
+  {
+    "id": 53,
+    "conversation_id": 36,
+    "character_id": 2,
+    "content": "My dear, I must say with a smile that adults, like children, learn best through their own experiences and discoveries rather than being 'taught.' Just as I've observed in my work with children, the key is to prepare the right environment that encourages growth and self-development. Perhaps instead of trying to teach your husband, you might consider how to create opportunities for him to develop his own awareness and sensitivity to others' needs. What specific behaviors are you hoping to nurture in him?",
+    "is_user_prompt": 0,
+    "turn_number": 1,
+    "created_at": "2025-07-01 23:26:12"
+  },
+  {
+    "id": 54,
+    "conversation_id": 36,
+    "character_id": 4,
+    "content": "Ah, Dr. Montessori, while I respect your educational philosophy, I must disagree! In my experience, husbands are like beautiful but stubborn gardens - they need clear, direct guidance from their wives. My mother always said 'a wise wife shapes her husband like clay,' and after 30 years of marriage, I've found this to be true. When my husband wasn't helping with housework, I didn't wait for him to 'discover' the broom - I firmly but lovingly showed him how to sweep properly and explained why it matters. Creating opportunities sounds nice, but sometimes a wife must take charge of her husband's growth, don't you think? What has been your observation of married couples in your schools?",
+    "is_user_prompt": 0,
+    "turn_number": 2,
+    "created_at": "2025-07-01 23:26:37"
+  },
+  {
+    "id": 55,
+    "conversation_id": 36,
+    "character_id": 2,
+    "content": "My dear friend, while I appreciate your commitment to your marriage, I must respectfully challenge this notion of 'shaping' another adult as if they were clay. Throughout my years of observation, I've seen that true growth - whether in children or adults - comes from within, not from external molding. Just as I discovered in my Casa dei Bambini, when we respect individual dignity and create an environment that supports natural development, remarkable transformations occur. Perhaps we might consider how traditional views of marriage sometimes conflict with the fundamental human need for self-directed growth? I would be curious to hear - have you noticed times when your husband showed natural inclinations toward growth when given space and respect?",
+    "is_user_prompt": 0,
+    "turn_number": 3,
+    "created_at": "2025-07-01 23:27:04"
+  }
+]

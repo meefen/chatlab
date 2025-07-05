@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, JSON, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, JSON, ForeignKey, Text
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from ..database import Base
@@ -7,7 +7,7 @@ class Conversation(Base):
     __tablename__ = "conversations"
     
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, nullable=False)
+    title = Column(String(500), nullable=False)
     participant_ids = Column(JSON, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     is_autonomous = Column(Boolean, default=False, nullable=False)

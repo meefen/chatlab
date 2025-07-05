@@ -1,0 +1,11 @@
+{
+  "export_timestamp": "2025-07-04T22:47:02.994825",
+  "source_database": "app.db",
+  "tables_exported": [
+    "users",
+    "characters",
+    "conversations",
+    "messages"
+  ],
+  "export_directory": "migration_data"
+}

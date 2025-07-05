@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "supabase_id": "16019b73-5688-4685-b08c-ddd26f86bf24",
+    "email": "bodong.chen@gmail.com",
+    "full_name": "da",
+    "avatar_url": null,
+    "is_active": 1,
+    "created_at": "2025-07-01 02:41:55",
+    "updated_at": "2025-07-01 02:41:55"
+  },
+  {
+    "id": 2,
+    "supabase_id": "9956ebb1-ad21-4aa1-8049-15f45e80a892",
+    "email": "cbd@upenn.edu",
+    "full_name": "Bodong Chen",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocKv79NmII_q7BV9dcreROEwM1Z1dPHURkyaut2RYizNbLWVqg=s96-c",
+    "is_active": 1,
+    "created_at": "2025-07-01 17:43:34",
+    "updated_at": "2025-07-01 17:43:34"
+  },
+  {
+    "id": 3,
+    "supabase_id": "9b5bde99-227d-4c3c-823a-de7b323a1151",
+    "email": "bodongchen@gmail.com",
+    "full_name": "Bodong Chen",
+    "avatar_url": null,
+    "is_active": 1,
+    "created_at": "2025-07-01 23:24:59",
+    "updated_at": "2025-07-01 23:24:59"
+  },
+  {
+    "id": 4,
+    "supabase_id": "9a8fd8b4-49cd-4d35-abe5-ddb4a7f69bcf",
+    "email": "meefen@outlook.com",
+    "full_name": "Bodong Chen",
+    "avatar_url": null,
+    "is_active": 1,
+    "created_at": "2025-07-04 02:12:18",
+    "updated_at": "2025-07-04 02:12:18"
+  }
+]

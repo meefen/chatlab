@@ -1,0 +1,54 @@
+services:
+  # FastAPI Backend Web Service
+  - type: web
+    name: chatlab-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "cd backend && python startup.py"
+    healthCheckPath: "/health"
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PORT
+        value: 8000
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: chatlab-db
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: AI_PROVIDER
+        value: anthropic
+      - key: CORS_ORIGINS
+        value: '["http://localhost:5173", "https://chatlab-frontend.vercel.app"]'
+    
+  # PostgreSQL Database
+  - type: pserv
+    name: chatlab-db
+    env: postgresql
+    region: oregon
+    plan: free
+    databaseName: chatlab
+    databaseUser: chatlab_user
+
+# Optional: Static site for frontend (if you want to host frontend on Render too)
+# - type: web
+#   name: chatlab-frontend
+#   env: static
+#   region: oregon
+#   plan: free
+#   buildCommand: "cd frontend && npm install && npm run build"
+#   staticPublishPath: frontend/dist
+#   envVars:
+#     - key: VITE_API_BASE_URL
+#       value: https://chatlab-backend.onrender.com

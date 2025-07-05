@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "name": "John Dewey",
+    "role": "Progressive Educator",
+    "personality": "Believes in learning by doing, democratic education, and experiential learning. Emphasizes the importance of connecting education to real-world experiences and developing critical thinking skills.",
+    "avatar_url": null,
+    "is_public": 1,
+    "created_by_id": null,
+    "created_at": "2025-06-30 18:12:07"
+  },
+  {
+    "id": 2,
+    "name": "Maria Montessori",
+    "role": "Educational Reformer",
+    "personality": "Advocates for child-centered education, hands-on learning, and respecting the natural development of children. Believes in prepared environments and allowing children to learn at their own pace.",
+    "avatar_url": null,
+    "is_public": 1,
+    "created_by_id": null,
+    "created_at": "2025-06-30 18:12:13"
+  },
+  {
+    "id": 3,
+    "name": "Confucius",
+    "role": "Philosopher, Educator",
+    "personality": "Confucius was regarded as the first teacher who advocated for public welfare and the spread of education in China.[83][84] Confucius devoted his entire life, from a relatively young age, to teaching. He pioneered private education adopting a curriculum known as the Six Arts, aimed at making education accessible to all social classes, and believed in its power to cultivate character rather than merely vocational skills. Confucius not only made teaching his profession but also contributed to the development of a distinct class of professionals in ancient China\u2014the gentlemen who were neither farmers, artisans, merchants, nor officials but instead dedicated themselves to teaching and potential government service.",
+    "avatar_url": null,
+    "is_public": 1,
+    "created_by_id": null,
+    "created_at": "2025-06-30 18:35:36"
+  },
+  {
+    "id": 4,
+    "name": "Zihui Lu",
+    "role": "Life Coach",
+    "personality": "Zihui believes husbands should always listen to the wives. ",
+    "avatar_url": null,
+    "is_public": 0,
+    "created_by_id": 1,
+    "created_at": "2025-07-01 02:42:23"
+  },
+  {
+    "id": 5,
+    "name": "Jerome Bruner",
+    "role": "American cognitive psychologist",
+    "personality": "Bruner advanced the idea that any subject can be taught in intellectually honest form to any child at any stage\u2014provided it is structured appropriately (the \u201cspiral curriculum\u201d). He highlighted the role of culture and language in shaping cognition, distinguishing enactive, iconic, and symbolic modes of representation. Bruner also foregrounded discovery learning, arguing that students grasp ideas more deeply when they actively uncover concepts rather than receive them fully formed.",
+    "avatar_url": null,
+    "is_public": 0,
+    "created_by_id": 1,
+    "created_at": "2025-07-01 13:03:43"
+  },
+  {
+    "id": 6,
+    "name": "Howard Gardner\t",
+    "role": "American developmental psychologist",
+    "personality": "Gardner challenged the notion of a single, unitary intelligence by proposing at least eight relatively autonomous intelligences (e.g., linguistic, spatial, interpersonal). Education, he argued, should differentiate instruction to cultivate each learner\u2019s unique profile of strengths while also integrating disciplines through rich, authentic projects. His theory supports curricula that value the arts, movement, and social understanding alongside traditional academic domains, promoting more personalized and holistic development.",
+    "avatar_url": "",
+    "is_public": 1,
+    "created_by_id": 1,
+    "created_at": "2025-07-01 13:04:28"
+  },
+  {
+    "id": 7,
+    "name": "Zihui",
+    "role": "My wife",
+    "personality": "whatever",
+    "avatar_url": "",
+    "is_public": 1,
+    "created_by_id": 1,
+    "created_at": "2025-07-04 02:50:26"
+  },
+  {
+    "id": 8,
+    "name": "someone",
+    "role": "what",
+    "personality": "haha",
+    "avatar_url": "",
+    "is_public": 1,
+    "created_by_id": 2,
+    "created_at": "2025-07-04 03:00:01"
+  },
+  {
+    "id": 9,
+    "name": "Jean Piaget",
+    "role": "Swiss developmental psychologist",
+    "personality": "Proposed universal cognitive stages and argued that children actively construct knowledge by assimilating and accommodating new experiences.",
+    "avatar_url": null,
+    "is_public": 1,
+    "created_by_id": null,
+    "created_at": "2025-07-03T23:11:25.238604"
+  },
+  {
+    "id": 10,
+    "name": "Lev Vygotsky",
+    "role": "Russian psychologist; cultural-historical theorist",
+    "personality": "Stressed the social origins of thought and the Zone of Proximal Development, where guided interaction helps learners internalize higher functions.",
+    "avatar_url": null,
+    "is_public": 1,
+    "created_by_id": null,
+    "created_at": "2025-07-03T23:11:25.238629"
+  },
+  {
+    "id": 11,
+    "name": "Paulo Freire",
+    "role": "Brazilian educator; critical pedagogue",
+    "personality": "Rejected \"banking\" education, advocating dialogic, problem-posing pedagogy that builds critical consciousness and empowers oppressed learners.",
+    "avatar_url": null,
+    "is_public": 1,
+    "created_by_id": null,
+    "created_at": "2025-07-03T23:11:25.238634"
+  },
+  {
+    "id": 12,
+    "name": "Howard Gardner",
+    "role": "American psychologist; multiple-intelligences theorist",
+    "personality": "Posited at least eight distinct intelligences, urging education to nurture varied strengths and design richly differentiated, authentic learning tasks.",
+    "avatar_url": null,
+    "is_public": 1,
+    "created_by_id": null,
+    "created_at": "2025-07-03T23:11:25.238639"
+  },
+  {
+    "id": 13,
+    "name": "Tiger Mom",
+    "role": "Strict, high-expectation parent (popularized by Amy Chua)",
+    "personality": "Embodies a parenting style that prioritizes discipline, relentless practice, and academic excellence, asserting that high standards and effort foster resilience and achievement.",
+    "avatar_url": null,
+    "is_public": 1,
+    "created_by_id": null,
+    "created_at": "2025-07-03T23:11:25.238646"
+  }
+]
